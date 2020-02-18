@@ -1,10 +1,22 @@
 <template>
-    
+    <div id="app">
+        <component :is="layout">
+            <router-view :layout.sync="layout"/>
+        </component>
+    </div>
 </template>
 
 <script>
     export default {
-        name: "App"
+        name: "App",
+        data() {
+            return {
+                layout: 'div'
+            }
+        },
+        created() {
+            this.$router.push('login');
+        }
     }
 </script>
 

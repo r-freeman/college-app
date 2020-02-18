@@ -1,0 +1,26 @@
+.form-label-group {
+    position: relative;
+}
+
+.form-label-group label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    pointer-events: none;
+    cursor: text;
+    line-height: 1.5;
+    transition: all .1s ease-in-out;
+    height: 3rem;
+    padding: .75rem;
+}
+
+.form-label-group input:not(:placeholder-shown) ~ label {
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    font-size: 10px;
+    line-height: 1;
+    opacity: .25;
+}
