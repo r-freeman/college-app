@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 require('laravel-mix-postcss-config');
+require('laravel-mix-alias');
 
 /*
  |--------------------------------------------------------------------------
@@ -15,5 +16,9 @@ require('laravel-mix-postcss-config');
 mix.js('resources/js/main.js', 'public/js')
     .postCss('resources/css/tailwind.css', 'public/css/main.css')
     .postCssConfig();
+
+mix.alias({
+    '@': '/resources/js'
+});
 
 mix.browserSync('localhost:8000');
