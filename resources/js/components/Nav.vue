@@ -36,7 +36,7 @@
                         <div class="ml-3 relative">
                             <div>
                                 <button @click="open = !open"
-                                        class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid">
+                                        class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none">
                                     <img class="h-8 w-8 rounded-full"
                                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                          alt=""/>
@@ -78,6 +78,23 @@
                 open: false,
                 activeClass: 'active'
             }
+        },
+        created() {
+            // listen for escape key
+            const handleEscape = (e) => {
+                if (e.key === 'Esc' || e.key === 'Escape') {
+                    // hide the nav dropdown
+                    this.open = false;
+                }
+            };
+
+            // add event handler
+            document.addEventListener('keydown', handleEscape);
+
+            // remove event listener when component is about to be destroyed
+            this.$once('hook:beforeDestory', () => {
+                document.removeEventListener('keydown', handleEscape);
+            })
         },
         computed: {
             currentPage() {
