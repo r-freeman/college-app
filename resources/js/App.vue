@@ -15,7 +15,7 @@
             }
         },
         created() {
-
+            this.$router.push('/home');
         }
     }
 </script>

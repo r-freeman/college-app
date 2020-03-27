@@ -1,0 +1,92 @@
+<template>
+    <div>
+        <header class="bg-white border-b-2 border-gray-200">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 h-18">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-lg font-semibold leading-tight text-gray-900">
+                        Dashboard
+                    </h2>
+                    <p class="text-sm leading-none text-gray-500">
+                        {{ new Date() | moment("dddd, MMMM Do YYYY") }}
+                    </p>
+                </div>
+            </div>
+        </header>
+        <div class="w-full h-screen bg-whitesmoke">
+            <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                <div class="px-4 py-6 sm:px-0">
+                    <h3 class="text-lg font-bold antialiased mb-4 text-gray-700">
+                        Summary
+                    </h3>
+                    <div class="grid xs:grid-cols-12 md:grid-cols-3 gap-6">
+                        <transition name="fade">
+                            <router-link to="courses" tag="div" v-show="ready"
+                                         class="bg-white pt-24 pb-3 px-6 rounded-lg shadow cursor-pointer transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
+                                <div class="flex items-end">
+                                    <div>
+                                        <h2 class="text-4xl">4
+                                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                                             Courses
+                                        </span>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </router-link>
+                        </transition>
+                        <transition name="fade">
+                            <router-link to="enrolments" tag="div" v-show="ready"
+                                         class="bg-white pt-24 pb-3 px-6 rounded-lg shadow transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
+                                <div class="flex items-end">
+                                    <div>
+                                        <h2 class="text-4xl">1
+                                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                                            Enrolments
+                                        </span>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </router-link>
+                        </transition>
+                        <transition name="fade">
+                            <router-link to="lecturers" tag="div" v-show="ready"
+                                         class="bg-white pt-24 pb-3 px-6 rounded-lg shadow transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
+                                <div class="flex items-end">
+                                    <div>
+                                        <h2 class="text-4xl">5
+                                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                                                Lecturers
+                                            </span>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </router-link>
+                        </transition>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    import Dashboard from "@/layouts/Dashboard";
+
+    export default {
+        name: "Home",
+        data() {
+            return {
+                ready: false
+            }
+        },
+        created() {
+            this.$emit("update:layout", Dashboard);
+        },
+        mounted() {
+            this.ready = true;
+        }
+    }
+</script>
+
+<style src="@/assets/css/anim.css" scoped>
+
+</style>

@@ -2,8 +2,11 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import store from './store';
+import moment from 'vue-moment';
 
 require('typeface-nunito-sans');
+
+Vue.use(moment);
 
 const app = new Vue({
     router,
