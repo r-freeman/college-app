@@ -1,18 +1,12 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
-import './vee-validate';
+import store from './store';
 
-require('./bootstrap');
-
-// import BootstrapVue and IconsPlugin
-import {BootstrapVue, IconsPlugin} from 'bootstrap-vue';
-
-// Install BootstrapVue and IconsPlugin
-Vue.use(BootstrapVue);
-Vue.use(IconsPlugin);
+require('typeface-nunito-sans');
 
 const app = new Vue({
     router,
+    store,
     render: h => h(App),
 }).$mount('#app');

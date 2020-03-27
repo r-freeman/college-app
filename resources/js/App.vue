@@ -15,7 +15,7 @@
             }
         },
         created() {
-            this.$router.push('login');
+
         }
     }
 </script>
