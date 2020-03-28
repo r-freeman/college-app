@@ -11,13 +11,7 @@ module.exports = {
                     removeAll: true
                 }
             }]
-        }),
-        env === 'production' ? require('@fullhuman/postcss-purgecss')({
-            content: [
-                './resources/js/**/*.vue'
-            ],
-            defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
-        }) : false
+        })
     ],
     minimize: true
 };
