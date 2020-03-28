@@ -4,6 +4,7 @@ import tokenService from "@/services/token";
 
 import Home from "@/views/Home";
 import Login from "@/views/auth/Login";
+import NotFound from "@/views/NotFound";
 
 Vue.use(VueRouter);
 
@@ -13,6 +14,7 @@ const routes = [
         name: 'home',
         component: Home,
         meta: {
+            title: 'Dashboard',
             requiresAuth: true
         }
     },
@@ -21,6 +23,15 @@ const routes = [
         name: 'login',
         component: Login,
         meta: {
+            title: 'Sign in to your account',
+            requiresAuth: false
+        }
+    },
+    {
+        path: '*',
+        component: NotFound,
+        meta: {
+            title: 'Page not found',
             requiresAuth: false
         }
     }

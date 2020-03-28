@@ -3,7 +3,6 @@ import router from "@/router";
 
 const BASE_URL = 'http://localhost:8000/api/';
 const UNAUTHORISED = 401;
-const NOT_FOUND = 404;
 
 // define and export an axios client
 export const api = axios.create({
@@ -19,10 +18,8 @@ api.interceptors.response.use(
     error => {
         const {status} = error.response;
         if (status === UNAUTHORISED) {
-            // router.push('/login').catch(err => {
-            // });
-        } else if (status === NOT_FOUND) {
-
+            router.push('/login').catch(err => {
+            });
         }
         return Promise.reject(error);
     }

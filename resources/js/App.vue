@@ -23,6 +23,11 @@
                 }).catch(e => this.$router.push('/login'));
 
             this.$router.push('/home');
+        },
+        watch: {
+            '$route'(to) {
+                document.title = to.meta.title || 'College';
+            }
         }
     }
 </script>
