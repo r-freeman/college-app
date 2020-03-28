@@ -49,9 +49,9 @@
                                  class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
                                 <div class="py-1 rounded-md bg-white shadow-xs">
                                     <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                        John Smith
+                                        {{ user.name }}
                                     </a>
-                                    <a @click="" href="#"
+                                    <a @click="logout" href="#"
                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                         Log Out
                                     </a>
@@ -67,6 +67,7 @@
 
 <script>
     import Education from "@/assets/svg/Education";
+    import {mapGetters, mapActions} from "vuex";
 
     export default {
         name: "Nav",
@@ -80,6 +81,8 @@
             }
         },
         created() {
+            this.fetchUser();
+
             // listen for escape key
             const handleEscape = (e) => {
                 if (e.key === 'Esc' || e.key === 'Escape') {
@@ -99,7 +102,19 @@
         computed: {
             currentPage() {
                 return this.$route.name.toLowerCase();
-            }
+            },
+            ...mapGetters('auth', ['user'])
+        },
+        methods: {
+            logout() {
+                this.$store.dispatch('auth/logout')
+                    .then(() => {
+                        this.$router.push('/login');
+                    }).catch(e => {
+
+                });
+            },
+            ...mapActions('auth', ['fetchUser'])
         }
     }
 </script>

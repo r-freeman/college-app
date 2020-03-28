@@ -7,6 +7,8 @@
 </template>
 
 <script>
+    import authService from "./services/auth";
+
     export default {
         name: "App",
         data() {
@@ -15,6 +17,11 @@
             }
         },
         created() {
+            authService.isLoggedIn()
+                .then(() => {
+                    // this.fetchCourses();
+                }).catch(e => this.$router.push('/login'));
+
             this.$router.push('/home');
         }
     }
