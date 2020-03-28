@@ -31,7 +31,7 @@ const routes = [
         path: '*',
         component: NotFound,
         meta: {
-            title: 'Page not found',
+            title: '404 Not Found',
             requiresAuth: false
         }
     }

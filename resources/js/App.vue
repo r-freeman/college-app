@@ -25,8 +25,11 @@
             this.$router.push('/home');
         },
         watch: {
-            '$route'(to) {
-                document.title = to.meta.title || 'College';
+            '$route': {
+                handler: (to, from) => {
+                    // change document title to route meta title
+                    document.title = to.meta.title || 'College';
+                }, immediate: true
             }
         }
     }

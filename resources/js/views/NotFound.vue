@@ -1,18 +1,14 @@
 <template>
-    <img :src="NotFound" class="w-64" alt=""/>
+    <div class="flex">
+        <h3 class="text-lg font-bold antialiased text-gray-700">404 Not Found</h3>
+    </div>
 </template>
 
 <script>
     import Full from "@/layouts/Full";
-    import NotFound from "@/assets/images/NotFound.png";
 
     export default {
         name: "NotFound",
-        data() {
-            return {
-                NotFound
-            }
-        },
         created() {
             this.$emit("update:layout", Full);
         }
