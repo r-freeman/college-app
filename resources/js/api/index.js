@@ -1,12 +1,20 @@
 import axios from "axios"
 import router from "@/router";
 
-const BASE_URL = 'http://localhost:8000/api/';
 const UNAUTHORISED = 401;
+
+let baseUrl,
+    env = process.env.NODE_ENV;
+
+if (env === 'development') {
+    baseUrl = 'http://localhost:8000/api/'
+} else if (env === 'production') {
+    // baseUrl = example.com/api/
+}
 
 // define and export an axios client
 export const api = axios.create({
-    baseURL: BASE_URL,
+    baseURL: baseUrl,
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
