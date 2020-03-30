@@ -1,6 +1,13 @@
 <template>
-    <div class="flex">
-        <h3 class="text-lg font-bold antialiased text-gray-700">404 Not Found</h3>
+    <div class="flex flex-col items-center">
+        <h3 class="text-lg font-bold leading-tight antialiased text-gray-700 mb-4">
+            <span class="block text-5xl">404</span>
+            Not Found
+        </h3>
+        <router-link to="home"
+                     class="text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+            Return to home
+        </router-link>
     </div>
 </template>
 
