@@ -21,4 +21,7 @@ mix.alias({
     '@': '/resources/js'
 });
 
-mix.browserSync('localhost:8000');
+mix.browserSync({
+    proxy: 'localhost:8000',
+    notify: false
+});
