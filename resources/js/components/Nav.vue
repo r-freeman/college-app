@@ -45,18 +45,26 @@
                             <div v-if="open" @click="open = false"
                                  class="fixed top-0 right-0 bottom-0 left-0 w-full h-full">
                             </div>
-                            <div v-if="open"
-                                 class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
-                                <div class="py-1 rounded-md bg-white shadow-xs">
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                        {{ user.name }}
-                                    </a>
-                                    <a @click="logout" href="#"
-                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                        Log Out
-                                    </a>
+                            <transition
+                                enter-active-class="transition ease-out duration-100"
+                                enter-class="transform opacity-0 scale-75"
+                                enter-to-class="transform opacity-100 scale-100"
+                                leave-active-class="transition ease-in duration-75"
+                                leave-class="transform opacity-100 scale-100"
+                                leave-to-class="transform opacity-0 scale-75">
+                                <div v-if="open"
+                                     class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
+                                    <div class="py-1 rounded-md bg-white shadow-xs">
+                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                            {{ user.name }}
+                                        </a>
+                                        <a @click="logout" href="#"
+                                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                            Log Out
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                            </transition>
                         </div>
                     </div>
                 </div>
