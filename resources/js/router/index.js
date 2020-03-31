@@ -4,6 +4,7 @@ import tokenService from "@/services/token";
 
 import Home from "@/views/Home";
 import Login from "@/views/auth/Login";
+import Register from "@/views/auth/Register";
 import NotFound from "@/views/NotFound";
 
 Vue.use(VueRouter);
@@ -24,6 +25,15 @@ const routes = [
         component: Login,
         meta: {
             title: 'Sign in to your account',
+            requiresAuth: false
+        }
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: Register,
+        meta: {
+            title: 'Create an account',
             requiresAuth: false
         }
     },

@@ -27,6 +27,18 @@ export default {
                 }).catch(e => reject(e));
         })
     },
+    register(credentials) {
+        return new Promise((resolve, reject) => {
+            api.post('register', credentials)
+                .then(response => {
+                    if (response.status === 200) {
+                        setAuthHeader(response.data.token);
+                        tokenService.setToken(response.data.token);
+                        resolve(response.data);
+                    }
+                }).catch(e => reject(e));
+        })
+    },
     user() {
         return new Promise((resolve, reject) => {
             api.get('user')

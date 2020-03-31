@@ -1,6 +1,8 @@
 // auth.js
+export const SET_NAME = 'SET_NAME';
 export const SET_EMAIL = 'SET_EMAIL';
 export const SET_PASSWORD = 'SET_PASSWORD';
+export const SET_CONFIRM = 'SET_CONFIRM';
 export const RESET_LOGIN = 'RESET_LOGIN';
 export const ATTEMPT_LOGIN = 'ATTEMPT_LOGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -9,3 +11,7 @@ export const SET_TOKEN = 'SET_TOKEN';
 export const LOGOUT = 'LOGOUT';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
+export const ATTEMPT_REGISTER = 'ATTEMPT_REGISTER';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAILURE = 'REGISTER_FAILURE';
+export const RESET_REGISTER = 'RESET_REGISTER';
