@@ -1,5 +1,6 @@
 <template>
     <div id="dashboard">
+        <Notifications/>
         <Nav/>
         <main id="dashboard__main">
             <slot/>
@@ -9,11 +10,13 @@
 
 <script>
     import Nav from "@/components/Nav";
+    import Notifications from "../components/Notifications";
 
     export default {
         name: "Dashboard",
         components: {
-            Nav
+            Nav,
+            Notifications
         }
     }
 </script>

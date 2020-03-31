@@ -98,10 +98,24 @@ export default {
                         commit(types.LOGIN_SUCCESS, user);
                         dispatch('setToken');
                         resolve(user);
-                    }).catch(e => {
-                    commit(types.LOGIN_FAILURE);
-                    reject(e);
-                })
+                    })
+                    .catch(e => {
+                        commit(types.LOGIN_FAILURE);
+
+                        if (e.response.status === 401) {
+                            // 401 (unauthorised) display an error notification
+                            dispatch('notifications/createNotification',
+                                {
+                                    status: 'error',
+                                    title: 'Error',
+                                    message: 'Email or password was incorrect.'
+                                },
+                                {root: true}
+                            );
+                        }
+
+                        reject(e);
+                    })
             })
         },
         register({commit, state, dispatch}) {

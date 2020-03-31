@@ -1,5 +1,6 @@
 <template>
     <div id="full">
+        <Notifications/>
         <main id="full__main"
               class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <slot/>
@@ -8,8 +9,13 @@
 </template>
 
 <script>
+    import Notifications from "../components/Notifications";
+
     export default {
-        name: "Full"
+        name: "Full",
+        components: {
+            Notifications
+        }
     }
 </script>
 
