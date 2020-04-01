@@ -6,6 +6,7 @@ import Home from "@/views/Home";
 import Login from "@/views/auth/Login";
 import Register from "@/views/auth/Register";
 import Courses from "@/views/courses/Courses";
+import Course from "@/views/courses/Course";
 import NotFound from "@/views/NotFound";
 
 Vue.use(VueRouter);
@@ -44,6 +45,15 @@ const routes = [
         component: Courses,
         meta: {
             title: 'Courses',
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/courses/:id',
+        name: 'viewCourse',
+        component: Course,
+        meta: {
+            title: 'View Course',
             requiresAuth: true
         }
     },
