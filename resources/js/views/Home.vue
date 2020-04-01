@@ -19,7 +19,7 @@
                         Summary
                     </h3>
                     <div class="grid xs:grid-cols-12 md:grid-cols-3 gap-6">
-                        <div v-show="courses.length > 0">
+                        <div v-if="courses.length > 0">
                             <router-link to="courses" tag="div"
                                          class="bg-white pt-24 pb-3 px-6 rounded-lg shadow cursor-pointer transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
                                 <div class="flex items-end">
@@ -32,6 +32,9 @@
                                     </div>
                                 </div>
                             </router-link>
+                        </div>
+                        <div v-else class="flex justify-center items-center py-24 md:p-0">
+                            <TailSpin :fill="'#000'" class="w-8 h-8"/>
                         </div>
                         <div>
                             <router-link to="enrolments" tag="div" v-show="ready"
@@ -71,6 +74,7 @@
 <script>
     import {mapGetters} from "vuex";
     import Dashboard from "@/layouts/Dashboard";
+    import TailSpin from "@/assets/svg/TailSpin";
     import _ from "lodash";
 
     export default {
@@ -79,6 +83,9 @@
             return {
                 ready: false
             }
+        },
+        components: {
+            TailSpin
         },
         created() {
             this.$emit("update:layout", Dashboard);
