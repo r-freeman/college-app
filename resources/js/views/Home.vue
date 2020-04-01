@@ -19,12 +19,12 @@
                         Summary
                     </h3>
                     <div class="grid xs:grid-cols-12 md:grid-cols-3 gap-6">
-                        <transition name="fade">
-                            <router-link to="courses" tag="div" v-show="ready"
+                        <div v-show="courses.length > 0">
+                            <router-link to="courses" tag="div"
                                          class="bg-white pt-24 pb-3 px-6 rounded-lg shadow cursor-pointer transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
                                 <div class="flex items-end">
                                     <div>
-                                        <h2 class="text-4xl">4
+                                        <h2 class="text-4xl">{{ courses.length }}
                                             <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
                                              Courses
                                         </span>
@@ -32,8 +32,8 @@
                                     </div>
                                 </div>
                             </router-link>
-                        </transition>
-                        <transition name="fade">
+                        </div>
+                        <div>
                             <router-link to="enrolments" tag="div" v-show="ready"
                                          class="bg-white pt-24 pb-3 px-6 rounded-lg shadow transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
                                 <div class="flex items-end">
@@ -46,8 +46,8 @@
                                     </div>
                                 </div>
                             </router-link>
-                        </transition>
-                        <transition name="fade">
+                        </div>
+                        <div>
                             <router-link to="lecturers" tag="div" v-show="ready"
                                          class="bg-white pt-24 pb-3 px-6 rounded-lg shadow transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
                                 <div class="flex items-end">
@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
                             </router-link>
-                        </transition>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,9 @@
 </template>
 
 <script>
+    import {mapGetters} from "vuex";
     import Dashboard from "@/layouts/Dashboard";
+    import _ from "lodash";
 
     export default {
         name: "Home",
@@ -80,13 +82,19 @@
         },
         created() {
             this.$emit("update:layout", Dashboard);
+            if (_.isEmpty(this.courses)) {
+                this.$store.dispatch('courses/fetchCourses');
+            }
         },
         mounted() {
             this.ready = true;
+        },
+        computed: {
+            ...mapGetters('courses', ['courses'])
         }
     }
 </script>
 
-<style src="@/assets/css/anim.css" scoped>
+<style scoped>
 
 </style>

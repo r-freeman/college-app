@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
 
-<body>
+<body class="bg-whitesmoke">
 <div id="app">
 
 </div>

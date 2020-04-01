@@ -14,7 +14,7 @@
                                              :class="[currentPage.includes('home') ? activeClass : 'text-tropicalblue hover:text-white']">
                                     Home
                                 </router-link>
-                                <router-link to=""
+                                <router-link to="/courses"
                                              class="ml-4 px-3 py-2 rounded-md text-sm font-semibold focus:outline-none focus:text-white"
                                              :class="[currentPage.includes('course') ? activeClass : 'text-tropicalblue hover:text-white']">
                                     Courses
@@ -96,12 +96,12 @@
                     </router-link>
                     <router-link to="enrolments"
                                  class="mt-1 block px-3 py-2 rounded-md text-base font-semibold focus:outline-none focus:text-white"
-                                 :class="[currentPage.includes('courses') ? activeClass : 'text-tropicalblue hover:text-white']">
+                                 :class="[currentPage.includes('enrolments') ? activeClass : 'text-tropicalblue hover:text-white']">
                         Enrolments
                     </router-link>
                     <router-link to="lecturers"
                                  class="mt-1 block px-3 py-2 rounded-md text-base font-semibold focus:outline-none focus:text-white"
-                                 :class="[currentPage.includes('courses') ? activeClass : 'text-tropicalblue hover:text-white']">
+                                 :class="[currentPage.includes('lecturers') ? activeClass : 'text-tropicalblue hover:text-white']">
                         Lecturers
                     </router-link>
                 </div>

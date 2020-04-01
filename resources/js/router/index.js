@@ -5,6 +5,7 @@ import tokenService from "@/services/token";
 import Home from "@/views/Home";
 import Login from "@/views/auth/Login";
 import Register from "@/views/auth/Register";
+import Courses from "@/views/courses/Courses";
 import NotFound from "@/views/NotFound";
 
 Vue.use(VueRouter);
@@ -35,6 +36,15 @@ const routes = [
         meta: {
             title: 'Create an account',
             requiresAuth: false
+        }
+    },
+    {
+        path: '/courses',
+        name: 'courses',
+        component: Courses,
+        meta: {
+            title: 'Courses',
+            requiresAuth: true
         }
     },
     {
