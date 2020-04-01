@@ -1,7 +1,7 @@
 <template>
     <div>
-<!--        <AddCourse v-if="addCourseModal"-->
-<!--                   v-on:toggle-add-course-modal="toggleAddCourseModal"/>-->
+        <AddCourse v-if="addCourseModal"
+                   v-on:toggle-add-course-modal="toggleAddCourseModal"/>
 
         <header class="bg-white border-b-2 border-gray-200">
             <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 h-18">
@@ -10,7 +10,7 @@
                         Courses
                     </h2>
                     <button type="button"
-                            @click=""
+                            @click="toggleAddCourseModal"
                             class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none transition duration-150 ease-in-out">
                         Add Course
                     </button>
@@ -52,25 +52,25 @@
                                                 :course="course"
                                                 :key="course.id"/>
                                         </tbody>
-<!--                                        <tfoot class="bg-gray-50">-->
-<!--                                        <tr>-->
-<!--                                            <td colspan="5"-->
-<!--                                                class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">-->
-<!--                                                <div class="flex justify-between">-->
-<!--                                                    <p class="text-sm leading-5 text-gray-700">-->
-<!--                                                        Showing-->
-<!--                                                        <span class="font-semibold">1</span>-->
-<!--                                                        to-->
-<!--                                                        <span class="font-semibold">10</span>-->
-<!--                                                        of-->
-<!--                                                        <span class="font-semibold">{{ courses.length }}</span>-->
-<!--                                                        results-->
-<!--                                                    </p>-->
+                                        <!--                                        <tfoot class="bg-gray-50">-->
+                                        <!--                                        <tr>-->
+                                        <!--                                            <td colspan="5"-->
+                                        <!--                                                class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">-->
+                                        <!--                                                <div class="flex justify-between">-->
+                                        <!--                                                    <p class="text-sm leading-5 text-gray-700">-->
+                                        <!--                                                        Showing-->
+                                        <!--                                                        <span class="font-semibold">1</span>-->
+                                        <!--                                                        to-->
+                                        <!--                                                        <span class="font-semibold">10</span>-->
+                                        <!--                                                        of-->
+                                        <!--                                                        <span class="font-semibold">{{ courses.length }}</span>-->
+                                        <!--                                                        results-->
+                                        <!--                                                    </p>-->
 
-<!--                                                </div>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        </tfoot>-->
+                                        <!--                                                </div>-->
+                                        <!--                                            </td>-->
+                                        <!--                                        </tr>-->
+                                        <!--                                        </tfoot>-->
                                     </table>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
 
 <script>
     import Dashboard from "@/layouts/Dashboard";
-    // import AddCourse from "./AddCourse";
+    import AddCourse from "./AddCourse";
     import Course from "@/components/Course";
     import {mapGetters, mapActions} from "vuex";
     import _ from "lodash";
@@ -92,7 +92,7 @@
     export default {
         name: "Courses",
         components: {
-            // AddCourse,
+            AddCourse,
             Course
         },
         created() {
@@ -103,14 +103,14 @@
         },
         methods: {
             ...mapActions('courses', [
-                // 'toggleAddCourseModal',
+                'toggleAddCourseModal',
                 'fetchCourses'
             ])
         },
         computed: {
             ...mapGetters('courses', [
                 'courses',
-                // 'addCourseModal'
+                'addCourseModal'
             ])
         }
     }

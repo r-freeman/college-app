@@ -25,7 +25,8 @@
                                 <div class="flex items-end">
                                     <div>
                                         <h2 class="text-4xl">{{ courses.length }}
-                                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                                            <span
+                                                class="-ml-1 text-xs font-semibold text-gray-400 uppercase tracking-wide">
                                              Courses
                                         </span>
                                         </h2>
@@ -33,7 +34,7 @@
                                 </div>
                             </router-link>
                         </div>
-                        <div v-else class="flex justify-center items-center py-24 md:p-0">
+                        <div v-else class="flex justify-center items-center py-12 md:p-0">
                             <TailSpin :fill="'#000'" class="w-8 h-8"/>
                         </div>
                         <div>
@@ -42,7 +43,8 @@
                                 <div class="flex items-end">
                                     <div>
                                         <h2 class="text-4xl">1
-                                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                                            <span
+                                                class="-ml-1 text-xs font-semibold text-gray-400 uppercase tracking-wide">
                                             Enrolments
                                         </span>
                                         </h2>
@@ -56,7 +58,8 @@
                                 <div class="flex items-end">
                                     <div>
                                         <h2 class="text-4xl">5
-                                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                                            <span
+                                                class="-ml-1 text-xs font-semibold text-gray-400 uppercase tracking-wide">
                                                 Lecturers
                                             </span>
                                         </h2>

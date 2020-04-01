@@ -59,9 +59,12 @@ export default {
                 state.points = state.level = null;
             }
         },
-        [types.ADD_COURSE](state, payload) {
+        [types.ADD_COURSE_SUCCESS](state, payload) {
             // add new course to courses
             state.courses.push(payload);
+        },
+        [types.ADD_COURSE_FAILURE](state) {
+            state.course = {};
         },
         [types.TOGGLE_EDIT_COURSE_MODAL](state) {
             state.editCourseModal = !state.editCourseModal;
@@ -73,7 +76,7 @@ export default {
                 state._course = {};
             }
         },
-        [types.EDIT_COURSE](state, payload) {
+        [types.EDIT_COURSE](state) {
             // replace the original course with the updated course
             _.assign(state.course, state._course);
         },
@@ -142,20 +145,39 @@ export default {
         toggleAddCourseModal({commit}) {
             commit(types.TOGGLE_ADD_COURSE_MODAL);
         },
-        addCourse({commit, state, dispatch}) {
-            let course = {
-                id: Math.max.apply(null, state.courses.map(t => t.id)) + 1,
-                title: state.title,
-                code: state.code,
-                description: state.description,
-                points: state.points,
-                level: state.level
-            };
+        async addCourse({commit, state, dispatch}) {
+            try {
+                const response = await api.post('courses', {
+                    "title": state.title,
+                    "code": state.code,
+                    "description": state.description,
+                    "points": state.points,
+                    "level": state.level
+                });
+                commit(types.ADD_COURSE_SUCCESS, response.data.data);
 
-            commit(types.ADD_COURSE, course);
+                dispatch('notifications/createNotification',
+                    {
+                        status: 'success',
+                        title: 'Success',
+                        message: 'Course added successfully.'
+                    },
+                    {root: true}
+                );
+            } catch (e) {
+                commit(types.ADD_COURSE_FAILURE);
+
+                dispatch('notifications/createNotification',
+                    {
+                        status: 'error',
+                        title: 'Error',
+                        message: 'Failed to add course.'
+                    },
+                    {root: true}
+                );
+            }
+
             dispatch('toggleAddCourseModal');
-
-            // TODO: api
         },
         toggleEditCourseModal({commit}) {
             commit(types.TOGGLE_EDIT_COURSE_MODAL);
