@@ -35,7 +35,7 @@
                             </router-link>
                         </div>
                         <div v-else class="flex justify-center items-center py-12 md:p-0">
-                            <TailSpin :fill="'#000'" class="w-8 h-8"/>
+                            <TailSpin :fill="'#374150'" class="w-8 h-8"/>
                         </div>
                         <div>
                             <router-link to="enrolments" tag="div" v-show="ready"
