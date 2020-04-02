@@ -90,48 +90,51 @@ export default {
             return new Promise((resolve, reject) => {
                 commit(types.ATTEMPT_LOGIN);
 
-                authService.login({
-                    "email": state.email,
-                    "password": state.password
+                const {email, password} = state;
+                authService.login(
+                    {
+                        email,
+                        password
+                    }
+                ).then(user => {
+                    commit(types.LOGIN_SUCCESS, user);
+                    dispatch('setToken');
+                    resolve(user);
+                }).catch(e => {
+                    commit(types.LOGIN_FAILURE);
+
+                    if (e.response.status === 401) {
+                        // 401 (unauthorised) display an error notification
+                        dispatch('notifications/createNotification',
+                            {
+                                status: 'error',
+                                title: 'Error',
+                                message: 'Email or password was incorrect.'
+                            },
+                            {root: true}
+                        );
+                    }
+
+                    reject(e);
                 })
-                    .then(user => {
-                        commit(types.LOGIN_SUCCESS, user);
-                        dispatch('setToken');
-                        resolve(user);
-                    })
-                    .catch(e => {
-                        commit(types.LOGIN_FAILURE);
-
-                        if (e.response.status === 401) {
-                            // 401 (unauthorised) display an error notification
-                            dispatch('notifications/createNotification',
-                                {
-                                    status: 'error',
-                                    title: 'Error',
-                                    message: 'Email or password was incorrect.'
-                                },
-                                {root: true}
-                            );
-                        }
-
-                        reject(e);
-                    })
             })
         },
         register({commit, state, dispatch}) {
             return new Promise((resolve, reject) => {
                 commit(types.ATTEMPT_REGISTER);
 
-                authService.register({
-                    "name": state.name,
-                    "email": state.email,
-                    "password": state.password
-                })
-                    .then(user => {
-                        commit(types.REGISTER_SUCCESS, user);
-                        dispatch('setToken');
-                        resolve(user);
-                    }).catch(e => {
+                const {name, email, password} = state;
+                authService.register(
+                    {
+                        name,
+                        email,
+                        password
+                    }
+                ).then(user => {
+                    commit(types.REGISTER_SUCCESS, user);
+                    dispatch('setToken');
+                    resolve(user);
+                }).catch(e => {
                     commit(types.REGISTER_FAILURE);
                     reject(e);
                 })
