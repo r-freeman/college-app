@@ -16,7 +16,7 @@
                             Delete Course
                         </h3>
                         <div class="mt-2">
-                            <p v-if="enrolments" class="text-sm leading-5 text-gray-500">
+                            <p v-if="hasEnrolments" class="text-sm leading-5 text-gray-500">
                                 This course has {{ enrolments.length }} enrolments. You must delete the enrolments
                                 before deleting this course.
                             </p>
@@ -30,9 +30,10 @@
             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                     <button @click="deleteCourse" type="button"
-                            :disabled="enrolments"
-                            class="inline-flex bg-gray-400 select-none justify-center w-full rounded-md border border-transparent px-4 py-2 text-base leading-6 font-medium text-white shadow-sm focus:outline-none transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                    Confirm
+                            class="inline-flex bg-gray-400 select-none justify-center w-full rounded-md border border-transparent px-4 py-2 text-base leading-6 font-medium text-white shadow-sm focus:outline-none transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                            :class="[hasEnrolments ? '' : enabledClass]"
+                            :disabled="hasEnrolments">
+                            Confirm
                     </button>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
@@ -51,7 +52,14 @@
 
     export default {
         name: "DeleteCourse",
-        props: ['enrolments'],
+        props: {
+            enrolments: {
+                type: Array,
+                default: () => {
+                    return [];
+                }
+            }
+        },
         data() {
             return {
                 enabledClass: 'enabled'
@@ -59,6 +67,11 @@
         },
         components: {
             Warning
+        },
+        computed: {
+            hasEnrolments() {
+                return this.enrolments.length > 0
+            }
         },
         created() {
             // listen for escape key
@@ -90,10 +103,10 @@
 
 <style scoped>
     .enabled {
-        @apply bg-red-400
+        @apply bg-red-500
     }
 
     .enabled:hover {
-        @apply bg-red-500
+        @apply bg-red-600
     }
 </style>
