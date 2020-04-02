@@ -160,7 +160,7 @@
             document.addEventListener('keydown', handleEscape);
 
             // remove event listener when component is about to be destroyed
-            this.$once('hook:beforeDestory', () => {
+            this.$once('hook:beforeDestroy', () => {
                 document.removeEventListener('keydown', handleEscape);
             })
         },
