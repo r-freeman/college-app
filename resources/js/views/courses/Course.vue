@@ -3,9 +3,9 @@
         <!--        <EditCourse v-if="editCourseModal"-->
         <!--                    v-on:toggle-edit-course-modal="toggleEditCourseModal"/>-->
 
-        <!--        <DeleteCourse v-if="deleteCourseModal"-->
-        <!--                      v-on:toggle-delete-course-modal="toggleDeleteCourseModal"-->
-        <!--                      v-on:delete-course="deleteCourse"/>-->
+        <DeleteCourse v-if="deleteCourseModal"
+                      v-on:toggle-delete-course-modal="toggleDeleteCourseModal"
+                      v-on:delete-course="deleteCourse"/>
 
         <header class="bg-white border-b-2 border-gray-200">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 h-18">
@@ -26,13 +26,13 @@
                             </h3>
                             <div>
                                 <button type="button"
-                                        class="text-indigo-600 hover:text-indigo-900 font-semibold focus:outline-none focus:underline"
+                                        class="text-indigo-600 hover:text-indigo-900 font-semibold focus:outline-none"
                                         @click.prevent="">
                                     Edit
                                 </button>
                                 <button type="button"
-                                        class="ml-4 text-red-600 hover:text-red-900 font-semibold focus:outline-none focus:underline"
-                                        @click.prevent="">Delete
+                                        class="ml-4 text-red-600 hover:text-red-900 font-semibold focus:outline-none"
+                                        @click.prevent="toggleDeleteCourseModal">Delete
                                 </button>
                             </div>
                         </div>
@@ -91,13 +91,13 @@
     import Dashboard from "@/layouts/Dashboard";
     import {mapGetters, mapActions} from "vuex";
     // import EditCourse from "./EditCourse";
-    // import DeleteCourse from "./DeleteCourse";
+    import DeleteCourse from "./DeleteCourse";
 
     export default {
         name: "Course",
         components: {
             // EditCourse,
-            // DeleteCourse
+            DeleteCourse
         },
         created() {
             this.$emit("update:layout", Dashboard);

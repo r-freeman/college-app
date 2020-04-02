@@ -23,7 +23,7 @@ export default {
             return state.course;
         },
         courses: state => {
-            return state.courses;
+            return _.orderBy(state.courses, ['title']);
         },
         addCourseModal: state => {
             return state.addCourseModal;
@@ -113,8 +113,11 @@ export default {
         [types.TOGGLE_DELETE_COURSE_MODAL](state) {
             state.deleteCourseModal = !state.deleteCourseModal;
         },
-        [types.DELETE_COURSE](state, payload) {
+        [types.DELETE_COURSE_SUCCESS](state, payload) {
             state.courses.splice(state.courses.findIndex(course => course.id === payload), 1);
+            state.deleteCourseModal = false;
+        },
+        [types.DELETE_COURSE_FAILURE](state) {
             state.deleteCourseModal = false;
         }
     },
@@ -160,7 +163,7 @@ export default {
                     {
                         status: 'success',
                         title: 'Success',
-                        message: 'Course added successfully.'
+                        message: 'Course was added successfully.'
                     },
                     {root: true}
                 );
@@ -182,7 +185,7 @@ export default {
         toggleEditCourseModal({commit}) {
             commit(types.TOGGLE_EDIT_COURSE_MODAL);
         },
-        editCourse({commit, state, dispatch}) {
+        editCourse({commit, dispatch}) {
             commit(types.EDIT_COURSE);
 
             // const {title, code, description, points, level} = state._course;
@@ -196,10 +199,29 @@ export default {
         toggleDeleteCourseModal({commit}) {
             commit(types.TOGGLE_DELETE_COURSE_MODAL);
         },
-        deleteCourse({commit}, id) {
-            commit(types.DELETE_COURSE, id);
-
-            // TODO: api
+        async deleteCourse({commit, dispatch}, id) {
+            try {
+                await api.delete(`courses/${id}`);
+                commit(types.DELETE_COURSE_SUCCESS, id);
+                dispatch('notifications/createNotification',
+                    {
+                        type: 'success',
+                        title: 'Success',
+                        message: 'Course was deleted successfully'
+                    },
+                    {root: true}
+                );
+            } catch (e) {
+                commit(types.DELETE_COURSE_FAILURE);
+                dispatch('notifications/createNotification',
+                    {
+                        type: 'error',
+                        title: 'Error',
+                        message: 'Failed to delete course.'
+                    },
+                    {root: true}
+                );
+            }
         }
     }
 }

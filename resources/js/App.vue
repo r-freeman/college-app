@@ -21,7 +21,7 @@
                 .then(() => {
                 }).catch(e => this.$router.push('/login'));
 
-            // this.$router.push('/home');
+            this.$router.push('/home');
         },
         watch: {
             '$route': {
