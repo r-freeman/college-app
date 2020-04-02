@@ -72,13 +72,14 @@ export default {
             if (state.editCourseModal) {
                 // make a copy of the course
                 state._course = _.clone(state.course);
-            } else {
-                state._course = {};
             }
         },
-        [types.EDIT_COURSE](state) {
+        [types.EDIT_COURSE_SUCCESS](state) {
             // replace the original course with the updated course
             _.assign(state.course, state._course);
+        },
+        [types.EDIT_COURSE_FAILURE](state) {
+            state._course = {};
         },
         [types.SET_TITLE](state, payload) {
             state.title = payload;
@@ -150,13 +151,16 @@ export default {
         },
         async addCourse({commit, state, dispatch}) {
             try {
-                const response = await api.post('courses', {
-                    "title": state.title,
-                    "code": state.code,
-                    "description": state.description,
-                    "points": state.points,
-                    "level": state.level
-                });
+                const {title, code, description, points, level} = state;
+                const response = await api.post('courses',
+                    {
+                        title,
+                        code,
+                        description,
+                        points,
+                        level
+                    }
+                );
                 commit(types.ADD_COURSE_SUCCESS, response.data.data);
 
                 dispatch('notifications/createNotification',
@@ -185,16 +189,40 @@ export default {
         toggleEditCourseModal({commit}) {
             commit(types.TOGGLE_EDIT_COURSE_MODAL);
         },
-        editCourse({commit, dispatch}) {
-            commit(types.EDIT_COURSE);
-
-            // const {title, code, description, points, level} = state._course;
+        async editCourse({commit, state, dispatch}) {
+            try {
+                const {id, title, code, description, points, level} = state._course;
+                await api.put(`courses/${id}`,
+                    {
+                        title,
+                        code,
+                        description,
+                        points,
+                        level
+                    }
+                );
+                commit(types.EDIT_COURSE_SUCCESS);
+                dispatch('notifications/createNotification',
+                    {
+                        status: 'success',
+                        title: 'Success',
+                        message: 'Course was updated successfully.'
+                    },
+                    {root: true}
+                );
+            } catch (e) {
+                commit(types.EDIT_COURSE_FAILURE);
+                dispatch('notifications/createNotification',
+                    {
+                        status: 'error',
+                        title: 'Error',
+                        message: 'Failed to update course.'
+                    },
+                    {root: true}
+                );
+            }
 
             dispatch('toggleEditCourseModal');
-
-            // TODO: refactor code here to make put request to api with updated course.
-            //  If api responds with status 200, commit edit course mutation with the response data
-            //  containing the updated course. Do the same for adding and deleting courses.
         },
         toggleDeleteCourseModal({commit}) {
             commit(types.TOGGLE_DELETE_COURSE_MODAL);
