@@ -4,6 +4,7 @@
                     v-on:toggle-edit-course-modal="toggleEditCourseModal"/>
 
         <DeleteCourse v-if="deleteCourseModal"
+                      :enrolments="course.enrolments"
                       v-on:toggle-delete-course-modal="toggleDeleteCourseModal"
                       v-on:delete-course="deleteCourse"/>
 
