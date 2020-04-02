@@ -23,7 +23,9 @@
                     <div>
                         <div class="flex flex-col">
                             <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                                <p v-if="!courses.length" class="text-sm font-medium text-center text-gray-500">No
+                                <TailSpin v-if="isLoading" :fill="'#374150'" class="w-8 h-8 mx-auto"/>
+                                <p v-else-if="!courses.length" class="text-sm font-medium text-center text-gray-500">
+                                    No
                                     Courses</p>
                                 <div v-else
                                      class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg">
@@ -86,6 +88,7 @@
     import Dashboard from "@/layouts/Dashboard";
     import AddCourse from "./AddCourse";
     import Course from "@/components/Course";
+    import TailSpin from "@/assets/svg/TailSpin";
     import {mapGetters, mapActions} from "vuex";
     import _ from "lodash";
 
@@ -93,7 +96,8 @@
         name: "Courses",
         components: {
             AddCourse,
-            Course
+            Course,
+            TailSpin
         },
         created() {
             this.$emit("update:layout", Dashboard);
@@ -110,7 +114,8 @@
         computed: {
             ...mapGetters('courses', [
                 'courses',
-                'addCourseModal'
+                'addCourseModal',
+                'isLoading'
             ])
         }
     }

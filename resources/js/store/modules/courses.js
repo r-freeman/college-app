@@ -33,6 +33,9 @@ export default {
         },
         deleteCourseModal: state => {
             return state.deleteCourseModal;
+        },
+        isLoading: state => {
+            return state.loading;
         }
     },
     mutations: {
