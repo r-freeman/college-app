@@ -49,6 +49,10 @@ export default {
             state.lecturers = payload;
             state.loading = false;
         },
+        [types.FETCH_LECTURERS_FAILURE](state) {
+            state.lecturers = [];
+            state.loading = false;
+        },
         [types.TOGGLE_ADD_LECTURER_MODAL](state) {
             state.addLecturerModal = !state.addLecturerModal;
 
