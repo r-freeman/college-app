@@ -5,7 +5,9 @@
                 <div class="flex items-center justify-between h-16">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
-                            <Education class="w-8 h-8 text-white fill-current"/>
+                            <router-link to="/home">
+                                <Education class="w-8 h-8 text-white fill-current"/>
+                            </router-link>
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline">
@@ -19,12 +21,12 @@
                                              :class="[currentPage.includes('course') ? activeClass : 'text-tropicalblue hover:text-white']">
                                     Courses
                                 </router-link>
-                                <router-link to=""
+                                <router-link to="/enrolments"
                                              class="ml-4 px-3 py-2 rounded-md text-sm font-semibold focus:outline-none focus:text-white"
                                              :class="[currentPage.includes('enrolment') ? activeClass : 'text-tropicalblue hover:text-white']">
                                     Enrolments
                                 </router-link>
-                                <router-link to=""
+                                <router-link to="/lecturers"
                                              class="ml-4 px-3 py-2 rounded-md text-sm font-semibold focus:outline-none focus:text-white"
                                              :class="[currentPage.includes('lecturer') ? activeClass : 'text-tropicalblue hover:text-white']">
                                     Lecturers
@@ -84,22 +86,22 @@
             </div>
             <div v-if="open" class="md:hidden">
                 <div class="px-2 pt-2 pb-3 sm:px-3">
-                    <router-link to="home"
+                    <router-link to="/home"
                                  class="block px-3 py-2 rounded-md text-base font-semibold focus:outline-none focus:text-white"
                                  :class="[currentPage.includes('home') ? activeClass : 'text-tropicalblue hover:text-white']">
                         Home
                     </router-link>
-                    <router-link to="courses"
+                    <router-link to="/courses"
                                  class="mt-1 block px-3 py-2 rounded-md text-base font-semibold focus:outline-none focus:text-white"
                                  :class="[currentPage.includes('courses') ? activeClass : 'text-tropicalblue hover:text-white']">
                         Courses
                     </router-link>
-                    <router-link to="enrolments"
+                    <router-link to="/enrolments"
                                  class="mt-1 block px-3 py-2 rounded-md text-base font-semibold focus:outline-none focus:text-white"
                                  :class="[currentPage.includes('enrolments') ? activeClass : 'text-tropicalblue hover:text-white']">
                         Enrolments
                     </router-link>
-                    <router-link to="lecturers"
+                    <router-link to="/lecturers"
                                  class="mt-1 block px-3 py-2 rounded-md text-base font-semibold focus:outline-none focus:text-white"
                                  :class="[currentPage.includes('lecturers') ? activeClass : 'text-tropicalblue hover:text-white']">
                         Lecturers
