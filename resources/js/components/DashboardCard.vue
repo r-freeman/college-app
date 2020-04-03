@@ -50,7 +50,7 @@
         },
         computed: {
             isReady() {
-                return this.items.length > 10
+                return this.items.length > 0
             }
         }
     }
