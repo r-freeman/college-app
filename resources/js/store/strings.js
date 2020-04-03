@@ -14,3 +14,6 @@ export const COURSE_MODAL_DELETE_TEXT = 'Are you sure you want to delete this co
 export const COURSE_ENROLMENTS_MODAL_DELETE_TEXT = (enrolmentCount) => {
     return `This course belongs to ${enrolmentCount} enrolments and cannot be deleted.`
 };
+
+// lecturers
+export const LECTURERS_RETRIEVE_FAILED = 'Failed to retrieve lecturers.';

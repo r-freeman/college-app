@@ -20,7 +20,7 @@
                     </h3>
                     <div class="grid xs:grid-cols-12 md:grid-cols-3 gap-6">
                         <div v-if="courses.length > 0">
-                            <router-link to="courses" tag="div"
+                            <router-link to="/courses" tag="div"
                                          class="bg-white pt-24 pb-3 px-6 rounded-lg shadow cursor-pointer transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
                                 <div class="flex items-end">
                                     <div>
@@ -38,7 +38,7 @@
                             <TailSpin :fill="'#374150'" class="w-8 h-8"/>
                         </div>
                         <div>
-                            <router-link to="enrolments" tag="div" v-show="ready"
+                            <router-link to="/enrolments" tag="div" v-show="ready"
                                          class="bg-white pt-24 pb-3 px-6 rounded-lg shadow transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
                                 <div class="flex items-end">
                                     <div>
@@ -52,20 +52,23 @@
                                 </div>
                             </router-link>
                         </div>
-                        <div>
-                            <router-link to="lecturers" tag="div" v-show="ready"
-                                         class="bg-white pt-24 pb-3 px-6 rounded-lg shadow transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
+                        <div v-if="lecturers.length > 0">
+                            <router-link to="/lecturers" tag="div"
+                                         class="bg-white pt-24 pb-3 px-6 rounded-lg shadow cursor-pointer transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
                                 <div class="flex items-end">
                                     <div>
-                                        <h2 class="text-4xl">5
+                                        <h2 class="text-4xl">{{ lecturers.length }}
                                             <span
                                                 class="-ml-1 text-xs font-semibold text-gray-400 uppercase tracking-wide">
-                                                Lecturers
-                                            </span>
+                                             Lecturers
+                                        </span>
                                         </h2>
                                     </div>
                                 </div>
                             </router-link>
+                        </div>
+                        <div v-else class="flex justify-center items-center py-12 md:p-0">
+                            <TailSpin :fill="'#374150'" class="w-8 h-8"/>
                         </div>
                     </div>
                 </div>
@@ -95,12 +98,16 @@
             if (_.isEmpty(this.courses)) {
                 this.$store.dispatch('courses/fetchCourses');
             }
+            if (_.isEmpty(this.lecturers)) {
+                this.$store.dispatch('lecturers/fetchLecturers');
+            }
         },
         mounted() {
             this.ready = true;
         },
         computed: {
-            ...mapGetters('courses', ['courses'])
+            ...mapGetters('courses', ['courses']),
+            ...mapGetters('lecturers', ['lecturers'])
         }
     }
 </script>
