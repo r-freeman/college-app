@@ -9,7 +9,7 @@ let baseUrl,
 if (env === 'development') {
     baseUrl = 'http://localhost:8000/api/'
 } else if (env === 'production') {
-    // baseUrl = example.com/api/
+    baseUrl = 'http://ancient-stream-40225.herokuapp.com/api/'
 }
 
 // define and export an axios client
