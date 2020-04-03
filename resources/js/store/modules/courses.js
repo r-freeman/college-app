@@ -1,4 +1,5 @@
 import * as types from "../mutation-types";
+import * as strings from "../strings";
 import _ from "lodash";
 import {api} from "@/api";
 
@@ -141,9 +142,9 @@ export default {
 
                 dispatch('notifications/createNotification',
                     {
-                        status: 'error',
-                        title: 'Error',
-                        message: 'Could not retrieve courses.'
+                        status: strings.ERROR.toLowerCase(),
+                        title: strings.ERROR,
+                        message: strings.COURSES_RETRIEVE_FAILED
                     },
                     {root: true}
                 );
@@ -168,9 +169,9 @@ export default {
 
                 dispatch('notifications/createNotification',
                     {
-                        status: 'success',
-                        title: 'Success',
-                        message: 'Course was added successfully.'
+                        status: strings.SUCCESS.toLowerCase(),
+                        title: strings.SUCCESS,
+                        message: strings.COURSE_ADDED
                     },
                     {root: true}
                 );
@@ -179,9 +180,9 @@ export default {
 
                 dispatch('notifications/createNotification',
                     {
-                        status: 'error',
-                        title: 'Error',
-                        message: 'Failed to add course.'
+                        status: strings.ERROR.toLowerCase(),
+                        title: strings.ERROR,
+                        message: strings.COURSE_ADD_FAILED
                     },
                     {root: true}
                 );
@@ -207,9 +208,9 @@ export default {
                 commit(types.EDIT_COURSE_SUCCESS);
                 dispatch('notifications/createNotification',
                     {
-                        status: 'success',
-                        title: 'Success',
-                        message: 'Course was updated successfully.'
+                        status: strings.SUCCESS.toLowerCase(),
+                        title: strings.SUCCESS,
+                        message: strings.COURSE_UPDATED
                     },
                     {root: true}
                 );
@@ -217,9 +218,9 @@ export default {
                 commit(types.EDIT_COURSE_FAILURE);
                 dispatch('notifications/createNotification',
                     {
-                        status: 'error',
-                        title: 'Error',
-                        message: 'Failed to update course.'
+                        status: strings.ERROR.toLowerCase(),
+                        title: strings.ERROR,
+                        message: strings.COURSE_UPDATE_FAILED
                     },
                     {root: true}
                 );
@@ -236,9 +237,9 @@ export default {
                 commit(types.DELETE_COURSE_SUCCESS, id);
                 dispatch('notifications/createNotification',
                     {
-                        type: 'success',
-                        title: 'Success',
-                        message: 'Course was deleted successfully'
+                        type: strings.SUCCESS.toLowerCase(),
+                        title: strings.SUCCESS,
+                        message: strings.COURSE_DELETED
                     },
                     {root: true}
                 );
@@ -246,9 +247,9 @@ export default {
                 commit(types.DELETE_COURSE_FAILURE);
                 dispatch('notifications/createNotification',
                     {
-                        type: 'error',
-                        title: 'Error',
-                        message: 'Failed to delete course.'
+                        type: strings.ERROR.toLowerCase(),
+                        title: strings.ERROR,
+                        message: strings.COURSE_DELETE_FAILED
                     },
                     {root: true}
                 );
