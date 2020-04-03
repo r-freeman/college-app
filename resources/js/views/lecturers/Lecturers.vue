@@ -1,7 +1,7 @@
 <template>
     <div>
-        <!--        <AddLecturer v-if="addLecturerModal"-->
-        <!--                     v-on:toggle-add-lecturer-modal="toggleAddLecturerModal"/>-->
+        <AddLecturer v-if="addLecturerModal"
+                     v-on:toggle-add-lecturer-modal="toggleAddLecturerModal"/>
 
         <header class="bg-white border-b-2 border-gray-200">
             <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 h-18">
@@ -65,7 +65,7 @@
 <script>
     import Dashboard from "@/layouts/Dashboard";
     import Lecturer from "@/components/Lecturer";
-    // import AddLecturer from "./AddLecturer";
+    import AddLecturer from "./AddLecturer";
     import TailSpin from "@/assets/svg/TailSpin";
     import {mapGetters, mapActions} from "vuex";
     import _ from "lodash";
@@ -73,7 +73,7 @@
     export default {
         name: "Lecturers",
         components: {
-            // AddLecturer,
+            AddLecturer,
             Lecturer,
             TailSpin
         },

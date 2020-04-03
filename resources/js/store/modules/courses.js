@@ -1,5 +1,5 @@
 import * as types from "../mutation-types";
-import * as strings from "../strings";
+import * as strings from "@/strings";
 import _ from "lodash";
 import {api} from "@/api";
 
@@ -237,7 +237,7 @@ export default {
                 commit(types.DELETE_COURSE_SUCCESS, id);
                 dispatch('notifications/createNotification',
                     {
-                        type: strings.SUCCESS.toLowerCase(),
+                        status: strings.SUCCESS.toLowerCase(),
                         title: strings.SUCCESS,
                         message: strings.COURSE_DELETED
                     },
@@ -247,7 +247,7 @@ export default {
                 commit(types.DELETE_COURSE_FAILURE);
                 dispatch('notifications/createNotification',
                     {
-                        type: strings.ERROR.toLowerCase(),
+                        status: strings.ERROR.toLowerCase(),
                         title: strings.ERROR,
                         message: strings.COURSE_DELETE_FAILED
                     },

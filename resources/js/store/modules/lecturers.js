@@ -1,5 +1,5 @@
 import * as types from "../mutation-types";
-import * as strings from "../strings";
+import * as strings from "@/strings";
 import _ from "lodash";
 import {api} from "@/api";
 
@@ -23,7 +23,7 @@ export default {
             return state.lecturer;
         },
         lecturers: state => {
-            return state.lecturers;
+            return _.orderBy(state.lecturers, ['name']);
         },
         addLecturerModal: state => {
             return state.addLecturerModal;
@@ -145,19 +145,41 @@ export default {
         toggleAddLecturerModal({commit}) {
             commit(types.TOGGLE_ADD_LECTURER_MODAL);
         },
-        addLecturer({commit, state, dispatch}) {
-            // let lecturer = {
-            //     id: Math.max.apply(null, state.lecturers.map(t => t.id)) + 1,
-            //     name: state.name,
-            //     address: state.address,
-            //     email: state.email,
-            //     phone: state.phone
-            // };
-            //
-            // commit(types.ADD_LECTURER, lecturer);
-            // dispatch('toggleAddLecturerModal');
+        async addLecturer({commit, state, dispatch}) {
+            try {
+                const {name, address, email, phone} = state;
+                const response = await api.post('lecturers',
+                    {
+                        name,
+                        address,
+                        email,
+                        phone
+                    }
+                );
+                commit(types.ADD_LECTURER_SUCCESS, response.data.data);
 
-            // TODO: api
+                dispatch('notifications/createNotification',
+                    {
+                        status: strings.SUCCESS.toLowerCase(),
+                        title: strings.SUCCESS,
+                        message: strings.LECTURER_ADDED
+                    },
+                    {root: true}
+                );
+            } catch (e) {
+                commit(types.ADD_LECTURER_FAILURE);
+
+                dispatch('notifications/createNotification',
+                    {
+                        status: strings.ERROR.toLowerCase(),
+                        title: strings.ERROR,
+                        message: strings.LECTURER_ADD_FAILED
+                    },
+                    {root: true}
+                );
+            }
+
+            dispatch('toggleAddLecturerModal');
         },
         toggleEditLecturerModal({commit}) {
             commit(types.TOGGLE_EDIT_LECTURER_MODAL);
@@ -176,10 +198,29 @@ export default {
         toggleDeleteLecturerModal({commit}) {
             commit(types.TOGGLE_DELETE_LECTURER_MODAL);
         },
-        deleteLecturer({commit}, id) {
-            // commit(types.DELETE_LECTURER, id);
-
-            // TODO: api
+        async deleteLecturer({commit, dispatch}, id) {
+            try {
+                await api.delete(`lecturers/${id}`);
+                commit(types.DELETE_LECTURER_SUCCESS, id);
+                dispatch('notifications/createNotification',
+                    {
+                        status: strings.SUCCESS.toLowerCase(),
+                        title: strings.SUCCESS,
+                        message: strings.LECTURER_DELETED
+                    },
+                    {root: true}
+                );
+            } catch (e) {
+                commit(types.DELETE_LECTURER_FAILURE);
+                dispatch('notifications/createNotification',
+                    {
+                        status: strings.ERROR.toLowerCase(),
+                        title: strings.ERROR,
+                        message: strings.LECTURER_DELETE_FAILED
+                    },
+                    {root: true}
+                );
+            }
         }
     }
 }

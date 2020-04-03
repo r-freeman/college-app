@@ -3,9 +3,10 @@
         <!--            <EditLecturer v-if="editLecturerModal"-->
         <!--                          v-on:toggle-edit-lecturer-modal="toggleEditLecturerModal"/>-->
 
-        <!--            <DeleteLecturer v-if="deleteLecturerModal"-->
-        <!--                            v-on:toggle-delete-lecturer-modal="toggleDeleteLecturerModal"-->
-        <!--                            v-on:delete-lecturer="deleteLecturer"/>-->
+        <DeleteLecturer v-if="deleteLecturerModal"
+                        :enrolments="lecturer.enrolments"
+                        v-on:toggle-delete-lecturer-modal="toggleDeleteLecturerModal"
+                        v-on:delete-lecturer="deleteLecturer"/>
 
         <header class="bg-white border-b-2 border-gray-200">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 h-18">
@@ -26,12 +27,12 @@
                             </h3>
                             <div>
                                 <button type="button"
-                                        class="text-indigo-600 hover:text-indigo-900 font-semibold focus:outline-none focus:underline"
+                                        class="text-indigo-600 hover:text-indigo-900 font-semibold focus:outline-none"
                                         @click.prevent="toggleEditLecturerModal">
                                     Edit
                                 </button>
                                 <button type="button"
-                                        class="ml-4 text-red-600 hover:text-red-900 font-semibold focus:outline-none focus:underline"
+                                        class="ml-4 text-red-600 hover:text-red-900 font-semibold focus:outline-none"
                                         @click.prevent="toggleDeleteLecturerModal">Delete
                                 </button>
                             </div>
@@ -83,13 +84,13 @@
     import Dashboard from "@/layouts/Dashboard";
     import {mapGetters, mapActions} from "vuex";
     // import EditLecturer from "./EditLecturer";
-    // import DeleteLecturer from "./DeleteLecturer";
+    import DeleteLecturer from "./DeleteLecturer";
 
     export default {
         name: "Lecturer",
         components: {
             // EditLecturer,
-            // DeleteLecturer
+            DeleteLecturer
         },
         created() {
             this.$emit("update:layout", Dashboard);

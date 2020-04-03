@@ -30,8 +30,8 @@
 </template>
 
 <script>
-    import Check from "../assets/svg/Check";
-    import Cross from "../assets/svg/Cross";
+    import Check from "@/assets/svg/Check";
+    import Cross from "@/assets/svg/Cross";
 
     export default {
         name: "Notification",
