@@ -71,6 +71,12 @@ const router = new VueRouter({
     routes
 });
 
+// fix for duplicate navigation error in console
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(e => e);
+};
+
 // navigation guard
 router.beforeEach((to, from, next) => {
     // redirect to login if trying to access protected route
