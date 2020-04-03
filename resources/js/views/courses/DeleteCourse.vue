@@ -17,11 +17,10 @@
                         </h3>
                         <div class="mt-2">
                             <p v-if="hasEnrolments" class="text-sm leading-5 text-gray-500">
-                                This course has {{ enrolments.length }} enrolments. You must delete the enrolments
-                                before deleting this course.
+                                {{ strings.COURSE_ENROLMENTS_MODAL_DELETE_TEXT(enrolments.length) }}
                             </p>
                             <p v-else class="text-sm leading-5 text-gray-500">
-                                Are you sure you want to delete this course? This action cannot be undone.
+                                {{ strings.COURSE_MODAL_DELETE_TEXT }}
                             </p>
                         </div>
                     </div>
@@ -49,6 +48,7 @@
 
 <script>
     import Warning from "@/assets/svg/Warning";
+    import * as strings from "@/store/strings";
 
     export default {
         name: "DeleteCourse",
@@ -62,7 +62,8 @@
         },
         data() {
             return {
-                enabledClass: 'enabled'
+                enabledClass: 'enabled',
+                strings
             }
         },
         components: {
