@@ -2,7 +2,7 @@
     <div class="fixed bottom-0 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-start sm:justify-center sm:my-48">
         <div class="fixed inset-0 transition-opacity">
             <div class="absolute inset-0 bg-black opacity-25"
-                 @click="toggleDeleteCourseModal"></div>
+                 @click="toggleDeleteCourseModal || !isDeleting"></div>
         </div>
         <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -17,7 +17,8 @@
                         </h3>
                         <div class="mt-2">
                             <p v-if="hasEnrolments" class="text-sm leading-5 text-gray-500">
-                                {{ strings.COURSE_ENROLMENTS_MODAL_DELETE_TEXT }}
+                                This course belongs to {{ enrolments.length }} enrolments. Are you sure you want to
+                                delete this course and its enrolments?
                             </p>
                             <p v-else class="text-sm leading-5 text-gray-500">
                                 {{ strings.COURSE_MODAL_DELETE_TEXT }}
@@ -29,15 +30,16 @@
             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                     <button @click="deleteCourse" type="button"
-                            class="inline-flex bg-gray-400 select-none justify-center w-full rounded-md border border-transparent px-4 py-2 text-base leading-6 font-medium text-white shadow-sm focus:outline-none transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                            :class="[hasEnrolments ? '' : enabledClass]"
-                            :disabled="hasEnrolments">
-                            Confirm
+                            class="inline-flex bg-red-500 hover:bg-red-600 select-none justify-center w-full rounded-md border border-transparent px-4 py-2 text-base leading-6 font-medium text-white shadow-sm focus:outline-none transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                            :disabled="isDeleting">
+                        <TailSpin v-if="isDeleting" class="w-6 h-6 mx-auto"/>
+                        <span v-else class="block leading-relaxed w-full h-6">Confirm</span>
                     </button>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                     <button @click="toggleDeleteCourseModal" type="button"
-                            class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                            class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                            :disabled="isDeleting">
                     Cancel
                     </button>
                 </span>
@@ -47,11 +49,17 @@
 </template>
 
 <script>
+    import {mapGetters} from "vuex";
     import Warning from "@/assets/svg/Warning";
+    import TailSpin from "@/assets/svg/TailSpin";
     import * as strings from "@/strings";
 
     export default {
         name: "DeleteCourse",
+        components: {
+            Warning,
+            TailSpin
+        },
         props: {
             enrolments: {
                 type: Array,
@@ -66,18 +74,16 @@
                 strings
             }
         },
-        components: {
-            Warning
-        },
         computed: {
             hasEnrolments() {
                 return this.enrolments.length > 0
-            }
+            },
+            ...mapGetters('courses', ['isDeleting'])
         },
         created() {
             // listen for escape key
             const handleEscape = (e) => {
-                if (e.key === 'Esc' || e.key === 'Escape') {
+                if (e.key === 'Esc' || e.key === 'Escape' && !this.isDeleting) {
                     // hide the nav dropdown
                     this.toggleDeleteCourseModal();
                 }

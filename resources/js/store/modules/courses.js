@@ -17,7 +17,8 @@ export default {
         addCourseModal: false,
         editCourseModal: false,
         deleteCourseModal: false,
-        loading: false
+        loading: false,
+        deleting: false
     },
     getters: {
         course: state => {
@@ -37,6 +38,9 @@ export default {
         },
         isLoading: state => {
             return state.loading;
+        },
+        isDeleting: state => {
+            return state.deleting;
         }
     },
     mutations: {
@@ -118,11 +122,16 @@ export default {
         [types.TOGGLE_DELETE_COURSE_MODAL](state) {
             state.deleteCourseModal = !state.deleteCourseModal;
         },
+        [types.DELETE_COURSE](state) {
+            state.deleting = true;
+        },
         [types.DELETE_COURSE_SUCCESS](state, payload) {
             state.courses.splice(state.courses.findIndex(course => course.id === payload), 1);
+            state.deleting = false;
             state.deleteCourseModal = false;
         },
         [types.DELETE_COURSE_FAILURE](state) {
+            state.deleting = false;
             state.deleteCourseModal = false;
         }
     },
@@ -231,8 +240,22 @@ export default {
         toggleDeleteCourseModal({commit}) {
             commit(types.TOGGLE_DELETE_COURSE_MODAL);
         },
-        async deleteCourse({commit, dispatch}, id) {
+        async deleteCourse({commit, state, dispatch}, id) {
             try {
+                commit(types.DELETE_COURSE);
+
+                if ("enrolments" in state.course) {
+                    state.course.enrolments.forEach(enrolment => {
+                        dispatch('enrolments/deleteEnrolment',
+                            {
+                                id: enrolment.id,
+                                withNotification: false
+                            },
+                            {root: true}
+                        );
+                    });
+                }
+
                 await api.delete(`courses/${id}`);
                 commit(types.DELETE_COURSE_SUCCESS, id);
                 dispatch('notifications/createNotification',
@@ -249,7 +272,7 @@ export default {
                     {
                         status: strings.ERROR.toLowerCase(),
                         title: strings.ERROR,
-                        message: strings.COURSE_DELETE_FAILED
+                        message: e.response.statusText
                     },
                     {root: true}
                 );

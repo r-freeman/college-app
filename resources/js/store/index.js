@@ -4,6 +4,7 @@ import auth from "./modules/auth";
 import notifications from "./modules/notifications";
 import courses from "./modules/courses";
 import lecturers from "./modules/lecturers";
+import enrolments from "./modules/enrolments";
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
         auth,
         notifications,
         courses,
-        lecturers
+        lecturers,
+        enrolments
     }
 });
