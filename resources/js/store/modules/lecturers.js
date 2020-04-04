@@ -16,7 +16,8 @@ export default {
         addLecturerModal: false,
         editLecturerModal: false,
         deleteLecturerModal: false,
-        loading: false
+        loading: false,
+        deleting: false
     },
     getters: {
         lecturer: state => {
@@ -36,6 +37,9 @@ export default {
         },
         isLoading: state => {
             return state.loading;
+        },
+        isDeleting: state => {
+            return state.deleting;
         }
     },
     mutations: {
@@ -110,11 +114,16 @@ export default {
         [types.TOGGLE_DELETE_LECTURER_MODAL](state) {
             state.deleteLecturerModal = !state.deleteLecturerModal;
         },
+        [types.DELETE_LECTURER](state) {
+            state.deleting = true;
+        },
         [types.DELETE_LECTURER_SUCCESS](state, payload) {
             state.lecturers.splice(state.lecturers.findIndex(lecturer => lecturer.id === payload), 1);
+            state.deleting = false;
             state.deleteLecturerModal = false;
         },
         [types.DELETE_LECTURER_FAILURE](state) {
+            state.deleting = false;
             state.deleteLecturerModal = false;
         }
     },
@@ -221,8 +230,22 @@ export default {
         toggleDeleteLecturerModal({commit}) {
             commit(types.TOGGLE_DELETE_LECTURER_MODAL);
         },
-        async deleteLecturer({commit, dispatch}, id) {
+        async deleteLecturer({commit, state, dispatch}, id) {
             try {
+                commit(types.DELETE_LECTURER);
+
+                if ("enrolments" in state.lecturer) {
+                    state.lecturer.enrolments.forEach(enrolment => {
+                        dispatch('enrolments/deleteEnrolment',
+                            {
+                                id: enrolment.id,
+                                withNotification: false
+                            },
+                            {root: true}
+                        );
+                    });
+                }
+
                 await api.delete(`lecturers/${id}`);
                 commit(types.DELETE_LECTURER_SUCCESS, id);
                 dispatch('notifications/createNotification',
@@ -233,13 +256,18 @@ export default {
                     },
                     {root: true}
                 );
+
+                // refresh lecturers, enrolments and courses
+                dispatch('fetchLecturers');
+                dispatch('enrolments/fetchEnrolments', null, {root: true});
+                dispatch('courses/fetchCourses', null, {root: true});
             } catch (e) {
                 commit(types.DELETE_LECTURER_FAILURE);
                 dispatch('notifications/createNotification',
                     {
                         status: strings.ERROR.toLowerCase(),
                         title: strings.ERROR,
-                        message: strings.LECTURER_DELETE_FAILED
+                        message: e.response.statusText
                     },
                     {root: true}
                 );

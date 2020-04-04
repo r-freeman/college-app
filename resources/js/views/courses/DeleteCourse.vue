@@ -2,7 +2,7 @@
     <div class="fixed bottom-0 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-start sm:justify-center sm:my-48">
         <div class="fixed inset-0 transition-opacity">
             <div class="absolute inset-0 bg-black opacity-25"
-                 @click="toggleDeleteCourseModal || !isDeleting"></div>
+                 @click="toggleDeleteCourseModal"></div>
         </div>
         <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -100,7 +100,9 @@
         },
         methods: {
             toggleDeleteCourseModal() {
-                this.$emit('toggle-delete-course-modal');
+                if (!this.isDeleting) {
+                    this.$emit('toggle-delete-course-modal');
+                }
             },
             deleteCourse() {
                 this.$emit('delete-course');

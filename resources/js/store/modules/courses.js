@@ -266,6 +266,11 @@ export default {
                     },
                     {root: true}
                 );
+
+                // refresh courses, enrolments and lecturers
+                dispatch('fetchCourses');
+                dispatch('enrolments/fetchEnrolments', null, {root: true});
+                dispatch('lecturers/fetchLecturers', null, {root: true});
             } catch (e) {
                 commit(types.DELETE_COURSE_FAILURE);
                 dispatch('notifications/createNotification',
