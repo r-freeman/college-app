@@ -1,7 +1,7 @@
 <template>
     <div>
-        <!--            <EditLecturer v-if="editLecturerModal"-->
-        <!--                          v-on:toggle-edit-lecturer-modal="toggleEditLecturerModal"/>-->
+        <EditLecturer v-if="editLecturerModal"
+                      v-on:toggle-edit-lecturer-modal="toggleEditLecturerModal"/>
 
         <DeleteLecturer v-if="deleteLecturerModal"
                         :enrolments="lecturer.enrolments"
@@ -83,13 +83,13 @@
 <script>
     import Dashboard from "@/layouts/Dashboard";
     import {mapGetters, mapActions} from "vuex";
-    // import EditLecturer from "./EditLecturer";
+    import EditLecturer from "./EditLecturer";
     import DeleteLecturer from "./DeleteLecturer";
 
     export default {
         name: "Lecturer",
         components: {
-            // EditLecturer,
+            EditLecturer,
             DeleteLecturer
         },
         created() {

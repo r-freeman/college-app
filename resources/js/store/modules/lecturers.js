@@ -184,16 +184,39 @@ export default {
         toggleEditLecturerModal({commit}) {
             commit(types.TOGGLE_EDIT_LECTURER_MODAL);
         },
-        editLecturer({commit, state, dispatch}) {
-            // commit(types.EDIT_LECTURER);
+        async editLecturer({commit, state, dispatch}) {
+            try {
+                const {id, name, address, email, phone} = state._lecturer;
+                await api.put(`lecturers/${id}`,
+                    {
+                        name,
+                        address,
+                        email,
+                        phone
+                    }
+                );
+                commit(types.EDIT_LECTURER_SUCCESS);
+                dispatch('notifications/createNotification',
+                    {
+                        status: strings.SUCCESS.toLowerCase(),
+                        title: strings.SUCCESS,
+                        message: strings.LECTURER_UPDATED
+                    },
+                    {root: true}
+                );
+            } catch (e) {
+                commit(types.EDIT_LECTURER_FAILURE);
+                dispatch('notifications/createNotification',
+                    {
+                        status: strings.ERROR.toLowerCase(),
+                        title: strings.ERROR,
+                        message: strings.LECTURER_UPDATE_FAILED
+                    },
+                    {root: true}
+                );
+            }
 
-            // const {title, code, description, points, level} = state._course;
-
-            // dispatch('toggleEditLecturerModal');
-
-            // TODO: refactor code here to make put request to api with updated lecturer.
-            //  If api responds with status 200, commit edit lecturer mutation with the response data
-            //  containing the updated lecturer. Do the same for adding and deleting lecturers.
+            dispatch('toggleEditLecturerModal');
         },
         toggleDeleteLecturerModal({commit}) {
             commit(types.TOGGLE_DELETE_LECTURER_MODAL);
