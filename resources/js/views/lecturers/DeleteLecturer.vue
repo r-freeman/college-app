@@ -17,7 +17,8 @@
                         </h3>
                         <div class="mt-2">
                             <p v-if="hasEnrolments" class="text-sm leading-5 text-gray-500">
-                                {{ strings.LECTURER_ENROLMENTS_MODAL_DELETE_TEXT }}
+                                This lecturer belongs to {{ enrolments.length }} enrolments. Are you sure you want to
+                                delete this lecturer and its enrolments?
                             </p>
                             <p v-else class="text-sm leading-5 text-gray-500">
                                 {{ strings.LECTURER_MODAL_DELETE_TEXT }}
@@ -29,15 +30,17 @@
             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                     <button @click="deleteLecturer" type="button"
-                            class="inline-flex bg-gray-400 select-none justify-center w-full rounded-md border border-transparent px-4 py-2 text-base leading-6 font-medium text-white shadow-sm focus:outline-none transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                            :class="[hasEnrolments ? '' : enabledClass]"
-                            :disabled="hasEnrolments">
-                            Confirm
+                            class="inline-flex bg-red-500 select-none justify-center w-full rounded-md border border-transparent px-4 py-2 text-base leading-6 font-medium text-white shadow-sm focus:outline-none transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                            :class="[!isDeleting ? 'hover:bg-red-600' : 'bg-red-600']"
+                            :disabled="isDeleting">
+                        <TailSpin v-if="isDeleting" class="w-6 h-6 mx-auto"/>
+                        <span v-else class="block leading-relaxed w-full h-6">Confirm</span>
                     </button>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                     <button @click="toggleDeleteLecturerModal" type="button"
-                            class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                            class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                            :disabled="isDeleting">
                     Cancel
                     </button>
                 </span>
@@ -47,11 +50,17 @@
 </template>
 
 <script>
+    import {mapGetters} from "vuex";
     import Warning from "@/assets/svg/Warning";
+    import TailSpin from "@/assets/svg/TailSpin";
     import * as strings from "@/strings";
 
     export default {
         name: "DeleteLecturer",
+        components: {
+            Warning,
+            TailSpin
+        },
         props: {
             enrolments: {
                 type: Array,
@@ -66,18 +75,16 @@
                 strings
             }
         },
-        components: {
-            Warning
-        },
         computed: {
             hasEnrolments() {
                 return this.enrolments.length > 0
-            }
+            },
+            ...mapGetters('lecturers', ['isDeleting'])
         },
         created() {
             // listen for escape key
             const handleEscape = (e) => {
-                if (e.key === 'Esc' || e.key === 'Escape') {
+                if (e.key === 'Esc' || e.key === 'Escape' && !this.isDeleting) {
                     // hide the nav dropdown
                     this.toggleDeleteLecturerModal();
                 }
@@ -93,7 +100,9 @@
         },
         methods: {
             toggleDeleteLecturerModal() {
-                this.$emit('toggle-delete-lecturer-modal');
+                if (!this.isDeleting) {
+                    this.$emit('toggle-delete-lecturer-modal');
+                }
             },
             deleteLecturer() {
                 this.$emit('delete-lecturer');

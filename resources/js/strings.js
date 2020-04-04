@@ -18,9 +18,7 @@ export const LECTURER_ADD_FAILED = 'Failed to add lecturer.';
 export const LECTURER_UPDATED = 'Lecturer was updated successfully.';
 export const LECTURER_UPDATE_FAILED = 'Failed to update lecturer.';
 export const LECTURER_DELETED = 'Lecturer was deleted successfully.';
-export const LECTURER_DELETE_FAILED = 'Failed to delete lecturer.';
 export const LECTURER_MODAL_DELETE_TEXT = 'Are you sure you want to delete this lecturer? This action cannot be undone.';
-export const LECTURER_ENROLMENTS_MODAL_DELETE_TEXT = 'This lecturer belongs to one or more enrolments. Are you sure you want to delete this lecturer and its enrolments?';
 
 // enrolment
 export const ENROLMENTS_RETRIEVE_FAILED = 'Failed to retrieve enrolments.';
