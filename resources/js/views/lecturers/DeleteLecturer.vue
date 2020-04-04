@@ -17,7 +17,7 @@
                         </h3>
                         <div class="mt-2">
                             <p v-if="hasEnrolments" class="text-sm leading-5 text-gray-500">
-                                {{ strings.LECTURER_ENROLMENTS_MODAL_DELETE_TEXT(enrolments.length) }}
+                                {{ strings.LECTURER_ENROLMENTS_MODAL_DELETE_TEXT }}
                             </p>
                             <p v-else class="text-sm leading-5 text-gray-500">
                                 {{ strings.LECTURER_MODAL_DELETE_TEXT }}
