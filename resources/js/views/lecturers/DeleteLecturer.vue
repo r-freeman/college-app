@@ -17,7 +17,7 @@
                         </h3>
                         <div class="mt-2">
                             <p v-if="hasEnrolments" class="text-sm leading-5 text-gray-500">
-                                This lecturer belongs to {{ enrolments.length }} enrolments. Are you sure you want to
+                                This lecturer has {{ enrolments.length }} enrolments. Are you sure you want to
                                 delete this lecturer and its enrolments?
                             </p>
                             <p v-else class="text-sm leading-5 text-gray-500">
