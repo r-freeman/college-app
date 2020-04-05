@@ -2,6 +2,9 @@
 export const SUCCESS = 'Success';
 export const ERROR = 'Error';
 
+// auth
+export const LOGIN_FAILED = 'Email or password was incorrect.';
+
 // courses
 export const COURSES_RETRIEVE_FAILED = 'Failed to retrieve courses.';
 export const COURSE_ADDED = 'Course was added successfully.';

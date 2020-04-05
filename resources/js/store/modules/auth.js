@@ -1,4 +1,5 @@
 import * as types from "../mutation-types";
+import * as strings from "@/strings";
 import authService from "@/services/auth";
 
 export default {
@@ -107,9 +108,9 @@ export default {
                         // 401 (unauthorised) display an error notification
                         dispatch('notifications/createNotification',
                             {
-                                status: 'error',
-                                title: 'Error',
-                                message: 'Email or password was incorrect.'
+                                status: strings.ERROR.toLowerCase(),
+                                title: strings.ERROR,
+                                message: strings.LOGIN_FAILED
                             },
                             {root: true}
                         );
