@@ -10,6 +10,7 @@ import Course from "@/views/courses/Course";
 import Lecturers from "@/views/lecturers/Lecturers";
 import Lecturer from "@/views/lecturers/Lecturer";
 import Enrolments from "@/views/enrolments/Enrolments";
+import Enrolment from "@/views/enrolments/Enrolment";
 import NotFound from "@/views/NotFound";
 
 Vue.use(VueRouter);
@@ -84,6 +85,15 @@ const routes = [
         component: Enrolments,
         meta: {
             title: 'Enrolments',
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/enrolments/:id',
+        name: 'viewEnrolment',
+        component: Enrolment,
+        meta: {
+            title: 'View Enrolment',
             requiresAuth: true
         }
     },
