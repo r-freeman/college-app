@@ -2,9 +2,9 @@
     <div>
         <!--        <EditEnrolment v-if="editEnrolmentModal"-->
         <!--                       v-on:toggle-edit-enrolment-modal="toggleEditEnrolmentModal"/>-->
-        <!--        <DeleteEnrolment v-if="deleteEnrolmentModal"-->
-        <!--                         v-on:toggle-delete-enrolment-modal="toggleDeleteEnrolmentModal"-->
-        <!--                         v-on:delete-enrolment="deleteEnrolment"/>-->
+        <DeleteEnrolment v-if="deleteEnrolmentModal"
+                         v-on:toggle-delete-enrolment-modal="toggleDeleteEnrolmentModal"
+                         v-on:delete-enrolment="deleteEnrolment"/>
 
         <header class="bg-white border-b-2 border-gray-200">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 h-18">
@@ -93,7 +93,7 @@
 <script>
     import Dashboard from "@/layouts/Dashboard";
     // import EditEnrolment from "./EditEnrolment";
-    // import DeleteEnrolment from "./DeleteEnrolment";
+    import DeleteEnrolment from "./DeleteEnrolment";
     import {mapGetters, mapActions} from "vuex";
 
     export default {
@@ -108,7 +108,7 @@
         },
         components: {
             // EditEnrolment,
-            // DeleteEnrolment
+            DeleteEnrolment
         },
         created() {
             this.$emit("update:layout", Dashboard);
@@ -127,7 +127,7 @@
                 }
             },
             deleteEnrolment() {
-                this.$store.dispatch('enrolments/deleteEnrolment', this.$route.params.id)
+                this.$store.dispatch('enrolments/deleteEnrolment', {id: this.$route.params.id})
                     .then(() => {
                         this.$router.push('/enrolments');
                     });
