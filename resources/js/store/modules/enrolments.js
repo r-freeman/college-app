@@ -1,4 +1,5 @@
 import * as types from "../mutation-types";
+import * as strings from "@/strings";
 import _ from "lodash";
 import {api} from "@/api";
 
@@ -154,23 +155,57 @@ export default {
         toggleAddEnrolmentModal({commit}) {
             commit(types.TOGGLE_ADD_ENROLMENT_MODAL);
         },
-        // addEnrolment({commit, state, dispatch, rootState}) {
-        //     let enrolment = {
-        //         id: Math.max.apply(null, state.enrolments.map(t => t.id)) + 1,
-        //         date: state.date,
-        //         time: state.time,
-        //         status: state.status,
-        //         course_id: state.course_id,
-        //         lecturer_id: state.lecturer_id,
-        //         course: rootState.courses.courses.find(course => course.id === state.course_id),
-        //         lecturer: rootState.lecturers.lecturers.find(lecturer => lecturer.id === state.lecturer_id)
-        //     };
-        //
-        //     commit(types.ADD_ENROLMENT, enrolment);
-        //     dispatch('toggleAddEnrolmentModal');
-        //
-        //     // TODO: api
-        // },
+        async addEnrolment({commit, state, dispatch, rootState}) {
+            try {
+                const {date, time, status, course_id, lecturer_id} = state;
+                const response = await api.post('enrolments',
+                    {
+                        date,
+                        time,
+                        status,
+                        course_id,
+                        lecturer_id
+                    }
+                );
+
+                const enrolment = response.data.data;
+
+                // add the course and lecturer object to the enrolment
+                // need to display course.title and lecturer.name in template
+                enrolment.course =
+                    rootState.courses.courses.find(course => course.id === course_id);
+                enrolment.lecturer =
+                    rootState.lecturers.lecturers.find(lecturer => lecturer.id === lecturer_id);
+
+                commit(types.ADD_ENROLMENT_SUCCESS, enrolment);
+
+                dispatch('notifications/createNotification',
+                    {
+                        status: strings.SUCCESS.toLowerCase(),
+                        title: strings.SUCCESS,
+                        message: strings.ENROLMENT_ADDED
+                    },
+                    {root: true}
+                );
+
+                // refresh courses and lecturers
+                dispatch('courses/fetchCourses', null, {root: true});
+                dispatch('lecturers/fetchLecturers', null, {root: true});
+            } catch (e) {
+                commit(types.ADD_ENROLMENT_FAILURE);
+
+                dispatch('notifications/createNotification',
+                    {
+                        status: strings.ERROR.toLowerCase(),
+                        title: strings.ERROR,
+                        message: strings.ENROLMENT_ADD_FAILED
+                    },
+                    {root: true}
+                );
+            }
+
+            dispatch('toggleAddEnrolmentModal');
+        },
         toggleEditEnrolmentModal({commit}) {
             commit(types.TOGGLE_EDIT_ENROLMENT_MODAL);
         },

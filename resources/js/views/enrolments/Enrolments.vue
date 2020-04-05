@@ -1,7 +1,7 @@
 <template>
     <div>
-        <!--        <AddEnrolment v-if="addEnrolmentModal"-->
-        <!--                      v-on:toggle-add-enrolment-modal="toggleAddEnrolmentModal"/>-->
+        <AddEnrolment v-if="addEnrolmentModal"
+                      v-on:toggle-add-enrolment-modal="toggleAddEnrolmentModal"/>
 
         <header class="bg-white border-b-2 border-gray-200">
             <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 h-18">
@@ -68,7 +68,7 @@
 <script>
     import Dashboard from "@/layouts/Dashboard";
     import Enrolment from "@/components/Enrolment";
-    // import AddEnrolment from "./AddEnrolment";
+    import AddEnrolment from "./AddEnrolment";
     import TailSpin from "@/assets/svg/TailSpin";
     import {mapGetters, mapActions} from "vuex";
     import _ from "lodash";
@@ -77,8 +77,8 @@
         name: "Enrolments",
         components: {
             Enrolment,
-            TailSpin
-            // AddEnrolment
+            TailSpin,
+            AddEnrolment
         },
         created() {
             this.$emit("update:layout", Dashboard);
