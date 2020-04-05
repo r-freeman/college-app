@@ -134,7 +134,7 @@
             login() {
                 this.$store.dispatch('auth/login')
                     .then(() => {
-                        this.$router.push('/home');
+                        this.$router.push('/');
                     }).catch(e => {
                 })
             }

@@ -4,7 +4,7 @@
             <span class="block text-5xl">404</span>
             Not Found
         </h3>
-        <router-link to="home"
+        <router-link to="/"
                      class="text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
             Return to home
         </router-link>

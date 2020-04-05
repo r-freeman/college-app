@@ -8,11 +8,17 @@ export default {
     isLoggedIn() {
         return new Promise((resolve, reject) => {
             const token = this.token();
+            // check if token is not an empty string
             if (token !== "") {
+                // make sure token is valid
                 setAuthHeader(token);
-                resolve()
+                this.user().then(user => {
+                    resolve(user);
+                }).catch(e => tokenService.deleteToken() && reject(e)); // delete invalid token
+            } else {
+                // token not set
+                reject();
             }
-            reject();
         })
     },
     login(credentials) {

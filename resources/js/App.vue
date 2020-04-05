@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import authService from "./services/auth";
+    import {mapActions} from "vuex";
 
     export default {
         name: "App",
@@ -17,15 +17,14 @@
             }
         },
         created() {
-            authService.isLoggedIn()
-                .then(() => {
-                }).catch(e => this.$router.push('/login'));
-
-            this.$router.push('/home');
+            this.fetchUser();
+        },
+        methods: {
+            ...mapActions('auth', ['fetchUser'])
         },
         watch: {
             '$route': {
-                handler: (to, from) => {
+                handler: (to) => {
                     // change document title to route meta title
                     document.title = to.meta.title || 'College';
                 }, immediate: true

@@ -145,7 +145,7 @@ export default {
         },
         async fetchUser({commit}) {
             try {
-                await authService.user()
+                await authService.isLoggedIn()
                     .then(user => {
                         commit(types.FETCH_USER_SUCCESS, user);
                     })

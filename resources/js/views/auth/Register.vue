@@ -165,7 +165,7 @@
             register() {
                 this.$store.dispatch('auth/register')
                     .then(() => {
-                        this.$router.push('/home');
+                        this.$router.push('/');
                     }).catch(e => {
                 })
             }

@@ -5,13 +5,13 @@
                 <div class="flex items-center justify-between h-16">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
-                            <router-link to="/home">
+                            <router-link to="/">
                                 <Education class="w-8 h-8 text-white fill-current"/>
                             </router-link>
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline">
-                                <router-link to="/home"
+                                <router-link to="/"
                                              class="px-3 py-2 rounded-md text-sm font-semibold focus:outline-none focus:text-white"
                                              :class="[currentPage.includes('home') ? activeClass : 'text-tropicalblue hover:text-white']">
                                     Home
@@ -86,7 +86,7 @@
             </div>
             <div v-if="open" class="md:hidden">
                 <div class="px-2 pt-2 pb-3 sm:px-3">
-                    <router-link to="/home"
+                    <router-link to="/"
                                  class="block px-3 py-2 rounded-md text-base font-semibold focus:outline-none focus:text-white"
                                  :class="[currentPage.includes('home') ? activeClass : 'text-tropicalblue hover:text-white']">
                         Home
@@ -135,7 +135,7 @@
 <script>
     import Education from "@/assets/svg/Education";
     import Avatar from "@/assets/images/avatar.png";
-    import {mapGetters, mapActions} from "vuex";
+    import {mapGetters} from "vuex";
 
     export default {
         name: "Nav",
@@ -150,8 +150,6 @@
             }
         },
         created() {
-            this.fetchUser();
-
             // listen for escape key
             const handleEscape = (e) => {
                 if (e.key === 'Esc' || e.key === 'Escape') {
@@ -179,11 +177,8 @@
                 this.$store.dispatch('auth/logout')
                     .then(() => {
                         this.$router.push('/login');
-                    }).catch(e => {
-
-                });
-            },
-            ...mapActions('auth', ['fetchUser'])
+                    }).catch(e => e);
+            }
         }
     }
 </script>
