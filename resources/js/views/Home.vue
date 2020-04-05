@@ -20,21 +20,7 @@
                     </h3>
                     <div class="grid xs:grid-cols-12 md:grid-cols-3 gap-6">
                         <DashboardCard :items="courses" :itemName="'Courses'" :route="'/courses'"/>
-                        <div>
-                            <router-link to="/enrolments" tag="div" v-show="ready"
-                                         class="bg-white pt-24 pb-3 px-6 rounded-lg shadow transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
-                                <div class="flex items-end">
-                                    <div>
-                                        <h2 class="text-4xl">1
-                                            <span
-                                                class="-ml-1 text-xs font-semibold text-gray-400 uppercase tracking-wide">
-                                            Enrolments
-                                        </span>
-                                        </h2>
-                                    </div>
-                                </div>
-                            </router-link>
-                        </div>
+                        <DashboardCard :items="enrolments" :itemName="'Enrolments'" :route="'/enrolments'"/>
                         <DashboardCard :items="lecturers" :itemName="'Lecturers'" :route="'/lecturers'"/>
                     </div>
                 </div>
@@ -47,34 +33,28 @@
     import {mapGetters} from "vuex";
     import Dashboard from "@/layouts/Dashboard";
     import DashboardCard from "@/components/DashboardCard";
-    import TailSpin from "@/assets/svg/TailSpin";
     import _ from "lodash";
 
     export default {
         name: "Home",
-        data() {
-            return {
-                ready: false
-            }
-        },
         components: {
-            DashboardCard,
-            TailSpin
+            DashboardCard
         },
         created() {
             this.$emit("update:layout", Dashboard);
             if (_.isEmpty(this.courses)) {
                 this.$store.dispatch('courses/fetchCourses');
             }
+            if (_.isEmpty(this.enrolments)) {
+                this.$store.dispatch('enrolments/fetchEnrolments');
+            }
             if (_.isEmpty(this.lecturers)) {
                 this.$store.dispatch('lecturers/fetchLecturers');
             }
         },
-        mounted() {
-            this.ready = true;
-        },
         computed: {
             ...mapGetters('courses', ['courses']),
+            ...mapGetters('enrolments', ['enrolments']),
             ...mapGetters('lecturers', ['lecturers'])
         }
     }

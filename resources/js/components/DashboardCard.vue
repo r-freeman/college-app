@@ -5,7 +5,7 @@
                 enter-to-class="opacity-100"
                 leave-active-class="transition duration-100"
                 leave-class="opacity-100"
-                leave-to-class="opacity-0">>
+                leave-to-class="opacity-0">
         <router-link :to="route" tag="div"
                      class="bg-white pt-24 pb-3 px-6 rounded-lg shadow cursor-pointer transition duration-500 lg:transform hover:scale-110 hover:shadow-lg">
             <div class="flex items-end">
@@ -19,7 +19,7 @@
             </div>
         </router-link>
     </transition>
-    <div v-else class="flex justify-center items-center py-12 md:p-0">
+    <div v-else class="mx-auto py-16">
         <TailSpin :fill="'#374150'" class="w-8 h-8"/>
     </div>
 </template>
