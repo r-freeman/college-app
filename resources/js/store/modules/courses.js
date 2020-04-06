@@ -223,6 +223,9 @@ export default {
                     },
                     {root: true}
                 );
+
+                // refresh enrolments when course is updated
+                dispatch('enrolments/fetchEnrolments', null, {root: true});
             } catch (e) {
                 commit(types.EDIT_COURSE_FAILURE);
                 dispatch('notifications/createNotification',
@@ -244,18 +247,21 @@ export default {
             try {
                 commit(types.DELETE_COURSE);
 
+                // if course has enrolments
                 if ("enrolments" in state.course) {
                     state.course.enrolments.forEach(enrolment => {
+                        // loop through each enrolment and delete
                         dispatch('enrolments/deleteEnrolment',
                             {
                                 id: enrolment.id,
-                                withNotification: false
+                                withNotification: false // don't flood the screen with notifications
                             },
                             {root: true}
                         );
                     });
                 }
 
+                // normal lecturer deletion (no enrolments)
                 await api.delete(`courses/${id}`);
                 commit(types.DELETE_COURSE_SUCCESS, id);
                 dispatch('notifications/createNotification',
@@ -267,10 +273,8 @@ export default {
                     {root: true}
                 );
 
-                // refresh courses, enrolments and lecturers
-                dispatch('fetchCourses');
+                // refresh enrolments on course deletion
                 dispatch('enrolments/fetchEnrolments', null, {root: true});
-                dispatch('lecturers/fetchLecturers', null, {root: true});
             } catch (e) {
                 commit(types.DELETE_COURSE_FAILURE);
                 dispatch('notifications/createNotification',

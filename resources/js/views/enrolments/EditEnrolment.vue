@@ -138,7 +138,8 @@
     import Edit from "@/assets/svg/Edit";
     import Check from "@/assets/svg/Check";
     import Cross from "@/assets/svg/Cross";
-    import {mapGetters} from "vuex";
+    import {mapGetters, mapActions} from "vuex";
+    import _ from "lodash";
 
     export default {
         name: "AddEnrolment",
@@ -155,6 +156,14 @@
             Edit,
             Check,
             Cross
+        },
+        created() {
+            if (_.isEmpty(this.courses)) {
+                this.fetchCourses();
+            }
+            if (_.isEmpty(this.lecturers)) {
+                this.fetchLecturers();
+            }
         },
         computed: {
             date: {
@@ -210,7 +219,13 @@
             },
             editEnrolment() {
                 this.$store.dispatch('enrolments/editEnrolment');
-            }
+            },
+            ...mapActions('courses', [
+                'fetchCourses'
+            ]),
+            ...mapActions('lecturers', [
+                'fetchLecturers'
+            ])
         }
     }
 </script>

@@ -226,6 +226,9 @@ export default {
             }
 
             dispatch('toggleEditLecturerModal');
+
+            // refresh enrolments when lecturer is updated
+            dispatch('enrolments/fetchEnrolments', null, {root: true});
         },
         toggleDeleteLecturerModal({commit}) {
             commit(types.TOGGLE_DELETE_LECTURER_MODAL);
@@ -234,18 +237,21 @@ export default {
             try {
                 commit(types.DELETE_LECTURER);
 
+                // if lecturer has enrolments
                 if ("enrolments" in state.lecturer) {
                     state.lecturer.enrolments.forEach(enrolment => {
+                        // loop through each enrolment and delete
                         dispatch('enrolments/deleteEnrolment',
                             {
                                 id: enrolment.id,
-                                withNotification: false
+                                withNotification: false // don't flood the screen with notifications
                             },
                             {root: true}
                         );
                     });
                 }
 
+                // normal lecturer deletion (no enrolments)
                 await api.delete(`lecturers/${id}`);
                 commit(types.DELETE_LECTURER_SUCCESS, id);
                 dispatch('notifications/createNotification',
@@ -257,10 +263,8 @@ export default {
                     {root: true}
                 );
 
-                // refresh lecturers, enrolments and courses
-                dispatch('fetchLecturers');
+                // refresh enrolments on lecturer deletion
                 dispatch('enrolments/fetchEnrolments', null, {root: true});
-                dispatch('courses/fetchCourses', null, {root: true});
             } catch (e) {
                 commit(types.DELETE_LECTURER_FAILURE);
                 dispatch('notifications/createNotification',

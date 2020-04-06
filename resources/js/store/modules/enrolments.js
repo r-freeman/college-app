@@ -233,6 +233,10 @@ export default {
                     },
                     {root: true}
                 );
+
+                // refresh courses and lecturers when enrolment is updated
+                dispatch('courses/fetchCourses', null, {root: true});
+                dispatch('lecturers/fetchLecturers', null, {root: true});
             } catch (e) {
                 commit(types.EDIT_ENROLMENT_FAILURE);
                 dispatch('notifications/createNotification',
@@ -263,6 +267,10 @@ export default {
                         },
                         {root: true}
                     );
+
+                    // refresh courses and lecturers when enrolment is deleted
+                    dispatch('courses/fetchCourses', null, {root: true});
+                    dispatch('lecturers/fetchLecturers', null, {root: true});
                 }
             } catch (e) {
                 commit(types.DELETE_ENROLMENT_FAILURE);
