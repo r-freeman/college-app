@@ -84,7 +84,7 @@
                                         Enrolments
                                     </dt>
                                     <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                                        {{ course.enrolments.length }}
+                                        {{ courseEnrolments }}
                                     </dd>
                                 </div>
                             </dl>
@@ -125,6 +125,9 @@
             ])
         },
         computed: {
+            courseEnrolments() {
+                return this.course.enrolments !== undefined ? this.course.enrolments.length : 0;
+            },
             ...mapGetters('courses', [
                 'course',
                 'editCourseModal',

@@ -31,7 +31,7 @@
             {{ course.level }}
         </td>
         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
-            {{ course.enrolments.length }}
+            {{ courseEnrolments }}
         </td>
     </router-link>
 </template>
@@ -39,7 +39,12 @@
 <script>
     export default {
         name: "Course",
-        props: ['course']
+        props: ['course'],
+        computed: {
+            courseEnrolments() {
+                return this.course.enrolments !== undefined ? this.course.enrolments.length : 0;
+            }
+        }
     }
 </script>
 
