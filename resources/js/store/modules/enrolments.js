@@ -76,16 +76,14 @@ export default {
             if (state.editEnrolmentModal) {
                 // make a copy of the enrolment
                 state._enrolment = _.clone(state.enrolment);
-            } else {
-                state._enrolment = {};
             }
         },
-        [types.EDIT_ENROLMENT](state, {course, lecturer}) {
-            // update the course and lecturer objects
-            state._enrolment.course = course;
-            state._enrolment.lecturer = lecturer;
+        [types.EDIT_ENROLMENT_SUCCESS](state, payload) {
             // replace the original enrolment with updated enrolment
-            _.assign(state.enrolment, state._enrolment);
+            _.assign(state.enrolment, payload);
+        },
+        [types.EDIT_ENROLMENT_FAILURE](state) {
+            state._enrolment = {};
         },
         [types.SET_DATE](state, payload) {
             state.date = payload;
@@ -170,7 +168,7 @@ export default {
 
                 const enrolment = response.data.data;
 
-                // add the course and lecturer object to the enrolment
+                // add the course and lecturer to the enrolment
                 // need to display course.title and lecturer.name in template
                 enrolment.course =
                     rootState.courses.courses.find(course => course.id === course_id);
@@ -188,9 +186,7 @@ export default {
                     {root: true}
                 );
 
-                // refresh courses and lecturers
-                dispatch('courses/fetchCourses', null, {root: true});
-                dispatch('lecturers/fetchLecturers', null, {root: true});
+
             } catch (e) {
                 commit(types.ADD_ENROLMENT_FAILURE);
 
@@ -198,7 +194,7 @@ export default {
                     {
                         status: strings.ERROR.toLowerCase(),
                         title: strings.ERROR,
-                        message: strings.ENROLMENT_ADD_FAILED
+                        message: e.response.status === 422 ? strings.ENROLLED_ERROR : strings.ENROLMENT_UPDATE_FAILED
                     },
                     {root: true}
                 );
@@ -209,17 +205,47 @@ export default {
         toggleEditEnrolmentModal({commit}) {
             commit(types.TOGGLE_EDIT_ENROLMENT_MODAL);
         },
-        editEnrolment({commit, state, dispatch, rootState}) {
-            dispatch('courses/fetchCourse', state._enrolment.course_id, {root: true});
-            dispatch('lecturers/fetchLecturer', state._enrolment.lecturer_id, {root: true});
+        async editEnrolment({commit, state, dispatch, rootState}) {
+            try {
+                const {id, date, time, status, course_id, lecturer_id} = state._enrolment;
+                const response = await api.put(`enrolments/${id}`,
+                    {
+                        date,
+                        time,
+                        status,
+                        course_id,
+                        lecturer_id
+                    }
+                );
 
-            commit(types.EDIT_ENROLMENT, {course: rootState.courses.course, lecturer: rootState.lecturers.lecturer});
+                const enrolment = response.data.data;
+                enrolment.course =
+                    rootState.courses.courses.find(course => course.id === enrolment.course_id);
+                enrolment.lecturer =
+                    rootState.lecturers.lecturers.find(lecturer => lecturer.id === enrolment.lecturer_id);
+
+                commit(types.EDIT_ENROLMENT_SUCCESS, enrolment);
+                dispatch('notifications/createNotification',
+                    {
+                        status: strings.SUCCESS.toLowerCase(),
+                        title: strings.SUCCESS,
+                        message: strings.ENROLMENT_UPDATED
+                    },
+                    {root: true}
+                );
+            } catch (e) {
+                commit(types.EDIT_ENROLMENT_FAILURE);
+                dispatch('notifications/createNotification',
+                    {
+                        status: strings.ERROR.toLowerCase(),
+                        title: strings.ERROR,
+                        message: e.response.status === 422 ? strings.ENROLLED_ERROR : strings.ENROLMENT_UPDATE_FAILED
+                    },
+                    {root: true}
+                );
+            }
 
             dispatch('toggleEditEnrolmentModal');
-
-            // TODO: refactor code here to make put request to api with updated enrolment.
-            //  If api responds with status 200, commit edit enrolment mutation with the response data
-            //  containing the updated enrolment. Do the same for adding and deleting enrolments.
         },
         toggleDeleteEnrolmentModal({commit}) {
             commit(types.TOGGLE_DELETE_ENROLMENT_MODAL);
