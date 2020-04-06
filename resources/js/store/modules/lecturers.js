@@ -182,7 +182,7 @@ export default {
                     {
                         status: strings.ERROR.toLowerCase(),
                         title: strings.ERROR,
-                        message: strings.LECTURER_ADD_FAILED
+                        message: e.response.status === 422 ? strings.EMAIL_TAKEN : strings.LECTURER_UPDATE_FAILED
                     },
                     {root: true}
                 );
@@ -219,7 +219,7 @@ export default {
                     {
                         status: strings.ERROR.toLowerCase(),
                         title: strings.ERROR,
-                        message: strings.LECTURER_UPDATE_FAILED
+                        message: e.response.status === 422 ? strings.EMAIL_TAKEN : strings.LECTURER_UPDATE_FAILED
                     },
                     {root: true}
                 );

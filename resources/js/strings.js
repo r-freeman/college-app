@@ -33,3 +33,4 @@ export const ENROLMENT_DELETED = 'Enrolment was deleted successfully.';
 export const ENROLMENT_DELETE_FAILED = 'Failed to delete enrolment.';
 export const ENROLMENT_MODAL_DELETE_TEXT = 'Are you sure you want to delete this enrolment? This action cannot be undone.';
 export const ENROLLED_ERROR = 'Lecturer has already enrolled in this course.';
+export const EMAIL_TAKEN = 'The email has already been taken.';
