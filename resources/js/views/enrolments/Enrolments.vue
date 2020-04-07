@@ -27,32 +27,52 @@
                                 <TailSpin v-if="isLoading" :fill="'#374150'" class="w-8 h-8 mx-auto"/>
                                 <p v-else-if="!filteredEnrolments.length"
                                    class="text-sm font-medium text-center text-gray-500">
-                                    {{ this.searchQuery !== '' ? `Couldn't find "${this.searchQuery}"`
+                                    {{ searchQuery !== '' ? `Couldn't find "${searchQuery}"`
                                     : 'No Enrolments'}}</p>
                                 <div v-else
                                      class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg">
                                     <table class="min-w-full">
                                         <thead>
                                         <tr>
-                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                Date
+                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
+                                                <button type="button" class="active:outline-none focus:outline-none"
+                                                        @click="sortBy('date', order === 'asc' ? 'desc' : 'asc')">
+                                                    <span
+                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Date</span>
+                                                </button>
                                             </th>
-                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                Time
+                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
+                                                <button type="button" class="active:outline-none focus:outline-none"
+                                                        @click="sortBy('time', order === 'asc' ? 'desc' : 'asc')">
+                                                    <span
+                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Time</span>
+                                                </button>
                                             </th>
-                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                Status
+                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
+                                                <button type="button" class="active:outline-none focus:outline-none"
+                                                        @click="sortBy('status', order === 'desc' ? 'asc' : 'desc')">
+                                                    <span
+                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Status</span>
+                                                </button>
                                             </th>
-                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                Course
+                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
+                                                <button type="button" class="active:outline-none focus:outline-none"
+                                                        @click="sortBy('course.title', order === 'desc' ? 'asc' : 'desc')">
+                                                    <span
+                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Course</span>
+                                                </button>
                                             </th>
-                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                Lecturer
+                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
+                                                <button type="button" class="active:outline-none focus:outline-none"
+                                                        @click="sortBy('lecturer.name', order === 'desc' ? 'asc' : 'desc')">
+                                                    <span
+                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Lecturer</span>
+                                                </button>
                                             </th>
                                         </tr>
                                         </thead>
                                         <tbody class="bg-white">
-                                        <Enrolment v-for="enrolment in filteredEnrolments"
+                                        <Enrolment v-for="enrolment in sortedEnrolments"
                                                    :enrolment="enrolment"
                                                    :key="enrolment.id"/>
                                         </tbody>
@@ -80,7 +100,9 @@
         name: "Enrolments",
         data() {
             return {
-                searchQuery: ''
+                searchQuery: '',
+                column: '',
+                order: ''
             }
         },
         components: {
@@ -96,6 +118,10 @@
             }
         },
         methods: {
+            sortBy(column, order) {
+                this.column = column;
+                this.order = order;
+            },
             updateQuery(val) {
                 this.searchQuery = val;
             },
@@ -105,6 +131,9 @@
             ])
         },
         computed: {
+            sortedEnrolments() {
+                return _.orderBy(this.filteredEnrolments, [this.column], [this.order]);
+            },
             filteredEnrolments() {
                 if (this.searchQuery !== '') {
                     const searchQuery = this.searchQuery.charAt(0).toLowerCase() + this.searchQuery.slice(1);

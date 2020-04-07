@@ -27,32 +27,52 @@
                                 <TailSpin v-if="isLoading" :fill="'#374150'" class="w-8 h-8 mx-auto"/>
                                 <p v-else-if="!filteredLecturers.length"
                                    class="text-sm font-medium text-center text-gray-500">
-                                    {{ this.searchQuery !== '' ? `Couldn't find "${this.searchQuery}"`
+                                    {{ searchQuery !== '' ? `Couldn't find "${searchQuery}"`
                                     : 'No Lecturers'}}</p>
                                 <div v-else
                                      class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg">
                                     <table class="min-w-full">
                                         <thead>
                                         <tr>
-                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                Name
+                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
+                                                <button type="button" class="active:outline-none focus:outline-none"
+                                                        @click="sortBy('name', order === 'desc' ? 'asc' : 'desc')">
+                                                    <span
+                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Name</span>
+                                                </button>
                                             </th>
-                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                Address
+                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
+                                                <button type="button" class="active:outline-none focus:outline-none"
+                                                        @click="sortBy('address', order === 'desc' ? 'asc' : 'desc')">
+                                                    <span
+                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Address</span>
+                                                </button>
                                             </th>
-                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                Email
+                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
+                                                <button type="button" class="active:outline-none focus:outline-none"
+                                                        @click="sortBy('email', order === 'desc' ? 'asc' : 'desc')">
+                                                    <span
+                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Email</span>
+                                                </button>
                                             </th>
-                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                Phone
+                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
+                                                <button type="button" class="active:outline-none focus:outline-none"
+                                                        @click="sortBy('phone', order === 'desc' ? 'asc' : 'desc')">
+                                                    <span
+                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Phone</span>
+                                                </button>
                                             </th>
-                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                                Enrolments
+                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
+                                                <button type="button" class="active:outline-none focus:outline-none"
+                                                        @click="sortBy('enrolments', order === 'desc' ? 'asc' : 'desc')">
+                                                    <span
+                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Enrolments</span>
+                                                </button>
                                             </th>
                                         </tr>
                                         </thead>
                                         <tbody class="bg-white">
-                                        <Lecturer v-for="lecturer in filteredLecturers"
+                                        <Lecturer v-for="lecturer in sortedLecturers"
                                                   :lecturer="lecturer"
                                                   :key="lecturer.id"/>
                                         </tbody>
@@ -80,7 +100,9 @@
         name: "Lecturers",
         data() {
             return {
-                searchQuery: ''
+                searchQuery: '',
+                column: '',
+                order: ''
             }
         },
         components: {
@@ -96,6 +118,10 @@
             }
         },
         methods: {
+            sortBy(column, order) {
+                this.column = column;
+                this.order = order;
+            },
             updateQuery(val) {
                 this.searchQuery = val;
             },
@@ -105,6 +131,9 @@
             ])
         },
         computed: {
+            sortedLecturers() {
+                return _.orderBy(this.filteredLecturers, [this.column], [this.order]);
+            },
             filteredLecturers() {
                 if (this.searchQuery !== '') {
                     const searchQuery = this.searchQuery.charAt(0).toLowerCase() + this.searchQuery.slice(1);

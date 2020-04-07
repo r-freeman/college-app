@@ -1,7 +1,7 @@
 import * as types from "../mutation-types";
 import * as strings from "@/strings";
-import _ from "lodash";
 import {api} from "@/api";
+import _ from "lodash";
 
 export default {
     namespaced: true,
@@ -24,7 +24,7 @@ export default {
             return state.enrolment;
         },
         enrolments: state => {
-            return state.enrolments;
+            return _.orderBy(state.enrolments, ['date'], 'desc');
         },
         addEnrolmentModal: state => {
             return state.addEnrolmentModal;
