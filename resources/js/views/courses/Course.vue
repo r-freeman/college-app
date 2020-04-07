@@ -10,7 +10,7 @@
 
         <header class="bg-white border-b-2 border-gray-200">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 h-18">
-                <div class="flex items-center">
+                <div class="flex h-8 items-center">
                     <h2 class="text-lg font-semibold leading-tight text-gray-900">
                         View Course
                     </h2>

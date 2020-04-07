@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed bottom-0 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-start sm:justify-center sm:my-24">
+    <div class="fixed bottom-0 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-start sm:justify-center sm:my-24 z-10">
         <div class="fixed inset-0 transition-opacity">
             <div class="absolute inset-0 bg-black opacity-25"
                  @click="toggleAddEnrolmentModal"></div>
