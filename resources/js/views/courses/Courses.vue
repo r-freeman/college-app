@@ -35,46 +35,82 @@
                                         <thead>
                                         <tr>
                                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
-                                                <button type="button" class="active:outline-none focus:outline-none"
-                                                        @click="sortBy('title', order === 'desc' ? 'asc' : 'desc')">
-                                                    <span
-                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Title</span>
-                                                </button>
+                                                <div class="flex">
+                                                    <button type="button"
+                                                            class="flex-none active:outline-none focus:outline-none leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                                            @click="sortBy('title', order === 'desc' ? 'asc' : 'desc')">
+                                                        Title
+                                                    </button>
+                                                    <Ascending v-if="column === 'title' && order === 'asc'"
+                                                               class="flex-none ml-1 w-4 h-4"/>
+                                                    <Descending v-else-if="column === 'title'"
+                                                                class="flex-none ml-1 w-4 h-4"/>
+                                                </div>
                                             </th>
                                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
-                                                <button type="button" class="active:outline-none focus:outline-none"
-                                                        @click="sortBy('code', order === 'desc' ? 'asc' : 'desc')">
-                                                    <span
-                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Code</span>
-                                                </button>
+                                                <div class="flex">
+                                                    <button type="button"
+                                                            class="flex-none active:outline-none focus:outline-none leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                                            @click="sortBy('code', order === 'desc' ? 'asc' : 'desc')">
+                                                        Code
+                                                    </button>
+                                                    <Ascending v-if="column === 'code' && order === 'asc'"
+                                                               class="flex-none ml-1 w-4 h-4"/>
+                                                    <Descending v-else-if="column === 'code'"
+                                                                class="flex-none ml-1 w-4 h-4"/>
+                                                </div>
                                             </th>
                                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
-                                                <button type="button" class="active:outline-none focus:outline-none"
-                                                        @click="sortBy('description', order === 'desc' ? 'asc' : 'desc')">
-                                                    <span
-                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Description</span>
-                                                </button>
+                                                <div class="flex">
+                                                    <button type="button"
+                                                            class="flex-none active:outline-none focus:outline-none leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                                            @click="sortBy('description', order === 'desc' ? 'asc' : 'desc')">
+                                                        Description
+                                                    </button>
+                                                    <Ascending v-if="column === 'description' && order === 'asc'"
+                                                               class="flex-none ml-1 w-4 h-4"/>
+                                                    <Descending v-else-if="column === 'description'"
+                                                                class="flex-none ml-1 w-4 h-4"/>
+                                                </div>
                                             </th>
                                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
-                                                <button type="button" class="active:outline-none focus:outline-none"
-                                                        @click="sortBy('points', order === 'desc' ? 'asc' : 'desc')">
-                                                    <span
-                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Points</span>
-                                                </button>
+                                                <div class="flex">
+                                                    <button type="button"
+                                                            class="flex-none active:outline-none focus:outline-none leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                                            @click="sortBy('points', order === 'desc' ? 'asc' : 'desc')">
+                                                        Points
+                                                    </button>
+                                                    <Ascending v-if="column === 'points' && order === 'asc'"
+                                                               class="flex-none ml-1 w-4 h-4"/>
+                                                    <Descending v-else-if="column === 'points'"
+                                                                class="flex-none ml-1 w-4 h-4"/>
+                                                </div>
                                             </th>
                                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
-                                                <button type="button" class="active:outline-none focus:outline-none"
-                                                        @click="sortBy('level', order === 'desc' ? 'asc' : 'desc')">
-                                                    <span
-                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Level</span>
-                                                </button>
+                                                <div class="flex">
+                                                    <button type="button"
+                                                            class="flex-none active:outline-none focus:outline-none leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                                            @click="sortBy('level', order === 'desc' ? 'asc' : 'desc')">
+                                                        Level
+                                                    </button>
+                                                    <Ascending v-if="column === 'level' && order === 'asc'"
+                                                               class="flex-none ml-1 w-4 h-4"/>
+                                                    <Descending v-else-if="column === 'level'"
+                                                                class="flex-none ml-1 w-4 h-4"/>
+                                                </div>
                                             </th>
                                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs">
-                                                <button type="button" class="active:outline-none focus:outline-none"
-                                                        @click="sortBy('enrolments', order === 'desc' ? 'asc' : 'desc')">
-                                                    <span
-                                                        class="leading-4 font-medium text-gray-500 uppercase tracking-wider">Enrolments</span>
-                                                </button>
+                                                <div class="flex">
+                                                    <button type="button"
+                                                            class="flex-none active:outline-none focus:outline-none leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                                                            @click="sortBy('enrolments', order === 'desc' ? 'asc' : 'desc')">
+                                                        Enrolments
+                                                    </button>
+                                                    <Ascending v-if="column === 'enrolments' && order === 'asc'"
+                                                               class="flex-none ml-1 w-4 h-4"/>
+                                                    <Descending v-else-if="column === 'enrolments'"
+                                                                class="flex-none ml-1 w-4 h-4"/>
+                                                </div>
                                             </th>
                                         </tr>
                                         </thead>
@@ -99,6 +135,8 @@
     import AddCourse from "./AddCourse";
     import Course from "@/components/Course";
     import Search from "@/components/Search";
+    import Ascending from "@/assets/svg/Ascending";
+    import Descending from "@/assets/svg/Descending";
     import TailSpin from "@/assets/svg/TailSpin";
     import {mapGetters, mapActions} from "vuex";
     import _ from "lodash";
@@ -108,14 +146,16 @@
         data() {
             return {
                 searchQuery: '',
-                column: '',
-                order: ''
+                column: 'title',
+                order: 'asc'
             }
         },
         components: {
             AddCourse,
             Course,
             Search,
+            Ascending,
+            Descending,
             TailSpin
         },
         created() {
