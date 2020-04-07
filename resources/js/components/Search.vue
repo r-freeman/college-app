@@ -1,7 +1,7 @@
 <template>
-    <div class="relative text-gray-600">
+    <div class="relative text-gray-600 border-2 border-gray-100 rounded-full">
         <input type="search" v-model="searchQuery" name="search" :placeholder="`Search ${this.items}`"
-               class="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none border-2 border-gray-100">
+               class="appearance-none bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
         <button type="submit" class="absolute right-0 top-0 mt-3 mr-4 focus:outline-none">
             <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
                  version="1.1" id="Capa_1" x="0px" y="0px"
