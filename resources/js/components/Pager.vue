@@ -10,13 +10,11 @@
             </button>
             <div>
                 <p class="text-sm leading-5 text-gray-700">
-                    Showing
                     <span class="font-medium">{{ itemsStart }}</span>
                     to
                     <span class="font-medium">{{ itemsEnd }}</span>
                     of
                     <span class="font-medium">{{ numItems }}</span>
-                    {{ itemName }}
                 </p>
             </div>
             <button type="button"
@@ -36,7 +34,6 @@
                         class="font-medium">{{ itemsEnd }}</span>
                     of
                     <span class="font-medium">{{ numItems }}</span>
-                    {{ itemName }}
                 </p>
             </div>
             <div>
@@ -82,10 +79,6 @@
             }
         },
         props: {
-            itemName: {
-                type: String,
-                required: true
-            },
             numItems: {
                 type: Number,
                 required: true

@@ -124,7 +124,6 @@
                                     </div>
                                     <Pager v-show="searchQuery === ''"
                                            :num-items="courses.length"
-                                           :item-name="'courses'"
                                            :per-page="perPage"
                                            :current-page="currentPage"
                                            @change-page="changePage"/>

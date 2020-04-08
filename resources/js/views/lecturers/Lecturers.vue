@@ -110,7 +110,6 @@
                                 </div>
                                 <Pager v-show="searchQuery === ''"
                                        :num-items="lecturers.length"
-                                       :item-name="'lecturers'"
                                        :per-page="perPage"
                                        :current-page="currentPage"
                                        @change-page="changePage"/>
