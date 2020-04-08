@@ -8,14 +8,19 @@
 
         <header class="bg-white border-b-2 border-gray-200">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 h-18">
-                <div class="flex h-8 items-center">
+                <div class="flex h-8 justify-between items-center">
                     <h2 class="text-lg font-semibold leading-tight text-gray-900">
                         View Enrolment
                     </h2>
+                    <button type="button"
+                            @click="goBack"
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-400 hover:bg-blue-500 focus:outline-none transition duration-150 ease-in-out">
+                        Back to Enrolments
+                    </button>
                 </div>
             </div>
         </header>
-        <div class="w-full h-screen bg-whitesmoke">
+        <div class="w-full">
             <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
                 <div class="px-4 py-6 sm:px-0">
                     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -115,6 +120,9 @@
             this.$store.dispatch('enrolments/fetchEnrolment', this.$route.params.id);
         },
         methods: {
+            goBack() {
+                this.$router.go(-1);
+            },
             enrolmentStatus(status) {
                 if (status === 'interested') {
                     return this.interestedClass;
