@@ -25,7 +25,7 @@
                         <div class="flex flex-col">
                             <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                                 <TailSpin v-if="isLoading" :fill="'#374150'" class="w-8 h-8 mx-auto"/>
-                                <p v-else-if="!filteredEnrolments.length"
+                                <p v-else-if="!sortedEnrolments.length"
                                    class="text-sm font-medium text-center text-gray-500">
                                     {{ searchQuery !== '' ? `Couldn't find "${searchQuery}"`
                                     : 'No Enrolments'}}</p>
@@ -108,6 +108,12 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <Pager v-show="searchQuery === ''"
+                                       :num-items="enrolments.length"
+                                       :item-name="'enrolments'"
+                                       :per-page="perPage"
+                                       :current-page="currentPage"
+                                       @change-page="changePage"/>
                             </div>
                         </div>
                     </div>
@@ -121,6 +127,7 @@
     import Dashboard from "@/layouts/Dashboard";
     import Enrolment from "@/components/Enrolment";
     import Search from "@/components/Search";
+    import Pager from "@/components/Pager";
     import AddEnrolment from "./AddEnrolment";
     import Ascending from "@/assets/svg/Ascending";
     import Descending from "@/assets/svg/Descending";
@@ -132,14 +139,17 @@
         name: "Enrolments",
         data() {
             return {
-                searchQuery: '',
                 column: 'date',
-                order: 'asc'
+                order: 'asc',
+                perPage: 20,
+                currentPage: 1,
+                searchQuery: ''
             }
         },
         components: {
             Enrolment,
             Search,
+            Pager,
             Ascending,
             Descending,
             TailSpin,
@@ -156,6 +166,9 @@
                 this.column = column;
                 this.order = order;
             },
+            changePage(number) {
+                this.currentPage = number;
+            },
             updateQuery(val) {
                 this.searchQuery = val;
             },
@@ -166,10 +179,15 @@
         },
         computed: {
             sortedEnrolments() {
-                return _.orderBy(this.filteredEnrolments, [this.column], [this.order]);
+                return _.orderBy(this.pagedEnrolments, [this.column], [this.order]);
+            },
+            pagedEnrolments() {
+                return this.filteredEnrolments.slice((this.currentPage - 1) * this.perPage, this.currentPage * this.perPage);
             },
             filteredEnrolments() {
                 if (this.searchQuery !== '') {
+                    // search from the first page to include all enrolments in result
+                    this.changePage(1);
                     const searchQuery = this.searchQuery.charAt(0).toLowerCase() + this.searchQuery.slice(1);
                     return this.enrolments.filter(enrolment => {
                         return enrolment.status.toLowerCase().indexOf(searchQuery) > -1 ||
