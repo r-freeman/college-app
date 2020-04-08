@@ -19,9 +19,9 @@
                         Summary
                     </h3>
                     <div class="grid xs:grid-cols-12 md:grid-cols-3 gap-6">
-                        <DashboardCard :items="courses" :itemName="'Courses'" :route="'/courses'"/>
-                        <DashboardCard :items="enrolments" :itemName="'Enrolments'" :route="'/enrolments'"/>
-                        <DashboardCard :items="lecturers" :itemName="'Lecturers'" :route="'/lecturers'"/>
+                        <DashboardCard :items="courses" :item-name="'Courses'" :route="'/courses'"/>
+                        <DashboardCard :items="enrolments" :item-name="'Enrolments'" :route="'/enrolments'"/>
+                        <DashboardCard :items="lecturers" :item-name="'Lecturers'" :route="'/lecturers'"/>
                     </div>
                 </div>
             </div>
