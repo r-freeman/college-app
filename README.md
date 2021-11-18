@@ -2,7 +2,7 @@
 
 ## College App
 
-Full stack application built with [Laravel 6](https://laravel.com/), [Vue.js](https://vuejs.org/) and [Tailwind CSS](https://tailwindcss.com/). Authentication with [Laravel Passport](https://laravel.com/docs/6.x/passport). The application features a dashboard interface demonstrating CRUD of three entities using RESTful API architecture.
+Full stack application built with [Laravel 6](https://laravel.com/), [Vue.js](https://vuejs.org/) and [Tailwind CSS](https://tailwindcss.com/) for managing college enrolments, courses and lecturers. The front end of the application features a dashboard interface created with Vue.js and Tailwind CSS. The back end provides a Restful API for the front end to consume. It was created according to MVC architecture and secured using [Laravel Passport](https://laravel.com/docs/6.x/passport).
 
 ## Demo
 
